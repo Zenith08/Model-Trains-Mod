@@ -1,0 +1,8 @@
+{
+    "variants": {
+        "facing=north": { "model": "modeltrains:traincontrollerNorth" },
+        "facing=south": { "model": "modeltrains:traincontrollerSouth" },
+        "facing=west":  { "model": "modeltrains:traincontrollerWest" },
+        "facing=east":  { "model": "modeltrains:traincontrollerEast" }
+    }
+}

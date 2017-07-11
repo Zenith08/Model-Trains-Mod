@@ -1,0 +1,40 @@
+itemGroup.modeltrainsTab=Model Trains
+item.trackStraight.east.name=Straight East-bound Model Track
+item.trackStraight.north.name=Straight North-bound Model Track
+
+item.trackCorner.north.name=North Corner Model Track
+item.trackCorner.south.name=South Corner Model Track
+item.trackCorner.east.name=East Corner Model Track
+item.trackCorner.west.name=West Corner Model Track
+
+item.trackStraightCross.name=Crossing Model Track
+
+tile.traincontroller.name=Train Controller
+tile.trackbed.name=Trackbed
+
+item.toyTrain.name=Toy Train Engine
+item.pasengercar0.name=Passenger Car (Light Red)
+item.pasengercar1.name=Passenger Car (Light Green)
+item.pasengercar2.name=Passenger Car (Blue)
+item.pasengercar3.name=Passenger Car (Black)
+item.pasengercar4.name=Passenger Car (Dark Green)
+item.pasengercar5.name=Passenger Car (Green)
+item.pasengercar6.name=Passenger Car (Dark Blue)
+item.pasengercar7.name=Passenger Car (Dark Red)
+item.pasengercar8.name=Passenger Car (White)
+item.pasengercar9.name=Passenger Car (Grey)
+item.pasengercar10.name=Passenger Car (Dark Yellow)
+item.pasengercar11.name=Passenger Car (Cyan)
+
+item.caboose0.name=Caboose (Light Red)
+item.caboose1.name=Caboose (Light Green)
+item.caboose2.name=Caboose (Blue)
+item.caboose3.name=Caboose (Black)
+item.caboose4.name=Caboose (Dark Green)
+item.caboose5.name=Caboose (Green)
+item.caboose6.name=Caboose (Dark Blue)
+item.caboose7.name=Caboose (Dark Red)
+item.caboose8.name=Caboose (White)
+item.caboose9.name=Caboose (Grey)
+item.caboose10.name=Caboose (Dark Yellow)
+item.caboose11.name=Caboose (Cyan)

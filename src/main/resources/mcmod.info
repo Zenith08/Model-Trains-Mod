@@ -1,0 +1,16 @@
+[
+{
+  "modid": "modeltrains",
+  "name": "Model Trains",
+  "description": "Adds model trains to minecraft",
+  "version": "1.0",
+  "mcversion": "1.10.2",
+  "url": "",
+  "updateUrl": "",
+  "authorList": ["Zenith08"],
+  "credits": "Dev: Zenith08",
+  "logoFile": "",
+  "screenshots": [],
+  "dependencies": []
+}
+]

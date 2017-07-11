@@ -1,0 +1,30 @@
+{
+    "parent":"modeltrains:block/traincontrollerNorth",
+    "display": {
+    "thirdperson_righthand": {
+        "rotation": [ -20, 0, 0 ],
+        "translation": [ 0, 2.08, -6.05 ],
+        "scale": [ 1, 1, 1 ]
+    },
+    "thirdperson_lefthand": {
+        "rotation": [ -20, 0, 0 ],
+        "translation": [ 0, 2.08, -6.05 ],
+        "scale": [ 1, 1, 1 ]
+    },
+    "ground": {
+        "rotation": [ 0, 0, 0 ],
+        "translation": [ 0, 0, 0 ],
+        "scale": [ 0.5, 0.5, 0.5 ]
+    },
+    "fixed": {
+        "rotation": [ 0, 0, 0 ],
+        "translation": [ 0, 0, 1.51 ],
+        "scale": [ 1, 1, 1 ]
+    },
+    "gui": {
+        "rotation": [ 20, 0, 0 ],
+        "translation": [ 0, 4.72, 0 ],
+        "scale": [ 1, 1, 1 ]
+    }
+}
+}

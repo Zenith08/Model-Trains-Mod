@@ -1,0 +1,62 @@
+package me.kk47.modeltrains.items;
+
+import me.kk47.modeltrains.Data;
+import me.kk47.modeltrains.ModelTrains;
+import me.kk47.modeltrains.client.model.ModelTrackStraight;
+import net.minecraft.client.model.ModelBase;
+import net.minecraft.client.renderer.block.model.ModelBakery;
+import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
+import net.minecraft.util.NonNullList;
+import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
+
+public class ItemModelTrackStraight extends ItemModelTrackBase {
+
+	private static ModelTrackStraight MODEL = new ModelTrackStraight();
+	private static ResourceLocation TEXTURE = new ResourceLocation(Data.MODID + ":textures/blocks/track/trackStraight.png");
+
+	private final String[] metadataNames = new String[]{"north", "east"};
+
+	public ItemModelTrackStraight() {
+		super("trackStraight");
+		this.setHasSubtypes(true);
+		this.setMaxDamage(2);
+		this.setCreativeTab(ModelTrains.creativeTab);
+	}
+
+	@Override
+	public String getUnlocalizedName(ItemStack stack){
+		return super.getUnlocalizedName() + "." + metadataNames[stack.getItemDamage()];
+	}
+
+	@SideOnly(Side.CLIENT)
+	@Override
+	public void getSubItems(CreativeTabs tab, NonNullList list){
+		if(this.isInCreativeTab(tab)) {
+			for(int i = 0; i < metadataNames.length; i++){
+				list.add(new ItemStack(this, 1, i));
+			}
+		}
+	}
+
+	public void registerVarients(){
+		ResourceLocation[] varientNames = new ResourceLocation[metadataNames.length];
+		for(int i = 0; i < varientNames.length; i++){
+			varientNames[i] = new ResourceLocation(Data.MODID, this.getUnlocalizedName().substring(5) + metadataNames[i]);
+		}
+		ModelBakery.registerItemVariants(ModItems.trackStraight, varientNames);
+	}
+
+	@Override
+	public ModelBase getRenderModel() {
+		return MODEL;
+	}
+
+	@Override
+	public ResourceLocation getTexture() {
+		return TEXTURE;
+	}
+}
