@@ -1,5 +1,5 @@
 {
-    "parent":"modeltrains:block/traincontrollerNorth",
+    "parent":"modeltrains:block/traincontrollernorth",
     "display": {
     "thirdperson_righthand": {
         "rotation": [ -20, 0, 0 ],

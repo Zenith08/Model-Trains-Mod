@@ -60,8 +60,8 @@ public class ModItems {
 	public static void clientPostInit(FMLPostInitializationEvent e){
 		RenderItem ri = Minecraft.getMinecraft().getRenderItem();
 		trackStraight.registerVarients();
-		ri.getItemModelMesher().register(trackStraight, 0, new ModelResourceLocation(Data.MODID + ":" + "trackStraightnorth", "inventory"));
-		ri.getItemModelMesher().register(trackStraight, 1, new ModelResourceLocation(Data.MODID + ":" + "trackStraighteast", "inventory"));
+		ri.getItemModelMesher().register(trackStraight, 0, new ModelResourceLocation(Data.MODID + ":" + "track-straight-north", "inventory"));
+		ri.getItemModelMesher().register(trackStraight, 1, new ModelResourceLocation(Data.MODID + ":" + "track-straight-east", "inventory"));
 	
 		trackCorner.registerVarients();
 		ri.getItemModelMesher().register(trackCorner, 0, new ModelResourceLocation(Data.MODID + ":" + "trackCornernorth", "inventory"));
@@ -69,7 +69,7 @@ public class ModItems {
 		ri.getItemModelMesher().register(trackCorner, 2, new ModelResourceLocation(Data.MODID + ":" + "trackCornereast", "inventory"));
 		ri.getItemModelMesher().register(trackCorner, 3, new ModelResourceLocation(Data.MODID + ":" + "trackCornerwest", "inventory"));
 	
-		ri.getItemModelMesher().register(trackCross, 0, new ModelResourceLocation(Data.MODID + ":" + "trackStraightCross", "inventory"));
+		ri.getItemModelMesher().register(trackCross, 0, new ModelResourceLocation(Data.MODID + ":" + "track-straight-cross", "inventory"));
 		
 		for(int i = 0; i < basicPassengerCarrages.length; i++){
 			ri.getItemModelMesher().register(basicPassengerCarrages[i], 0, new ModelResourceLocation(Data.MODID + ":" + "pasengercar" + i, "inventory"));
@@ -79,7 +79,7 @@ public class ModItems {
 			ri.getItemModelMesher().register(basicCabooses[i], 0, new ModelResourceLocation(Data.MODID + ":" + "caboose" + i, "inventory"));
 		}
 		
-		ri.getItemModelMesher().register(toyTrain, 0, new ModelResourceLocation(Data.MODID + ":" + "toyTrain", "inventory"));
+		ri.getItemModelMesher().register(toyTrain, 0, new ModelResourceLocation(Data.MODID + ":" + "toy-train", "inventory"));
 	}
 	
 }

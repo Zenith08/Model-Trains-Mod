@@ -16,7 +16,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 public class ItemModelTrackStraight extends ItemModelTrackBase {
 
 	private static ModelTrackStraight MODEL = new ModelTrackStraight();
-	private static ResourceLocation TEXTURE = new ResourceLocation(Data.MODID + ":textures/blocks/track/trackStraight.png");
+	private static ResourceLocation TEXTURE = new ResourceLocation(Data.MODID + ":textures/blocks/track/track-straight.png");
 
 	private final String[] metadataNames = new String[]{"north", "east"};
 
