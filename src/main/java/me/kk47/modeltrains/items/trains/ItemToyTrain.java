@@ -9,7 +9,7 @@ public class ItemToyTrain extends ItemTrain {
 	public ItemToyTrain() {
 		super(EnumTrainType.LOCOMOTIVE_STEAM, "toyTrain", 1);
 		this.setModel(new ModelToyTrain());
-		this.setTexture(new ResourceLocation(Data.MODID + ":textures/trains/ToySteamEngine.png"));
+		this.setTexture(new ResourceLocation(Data.MODID + ":textures/trains/toy-steam-engine.png"));
 	}
 
 }

@@ -45,7 +45,7 @@ public class ItemModelTrackStraight extends ItemModelTrackBase {
 	public void registerVarients(){
 		ResourceLocation[] varientNames = new ResourceLocation[metadataNames.length];
 		for(int i = 0; i < varientNames.length; i++){
-			varientNames[i] = new ResourceLocation(Data.MODID, this.getUnlocalizedName().substring(5) + metadataNames[i]);
+			varientNames[i] = new ResourceLocation(Data.MODID, this.getUnlocalizedName().substring(5) + "-" + metadataNames[i]);
 		}
 		ModelBakery.registerItemVariants(ModItems.trackStraight, varientNames);
 	}

@@ -9,7 +9,7 @@ import me.kk47.modeltrains.api.IItemTrain;
 public final class TrainRegistry {
 
 	//Internal array for train registry
-	private static Map<Integer, ItemTrain> trainRegistry = new HashMap<Integer, ItemTrain>();
+	private static Map<Integer, IItemTrain> trainRegistry = new HashMap<Integer, IItemTrain>();
 	
 	/**Gets the ItemTrain registered to the specific index
 	 * @param index - The index of the train to get*/
@@ -21,7 +21,7 @@ public final class TrainRegistry {
 	 * @param index - The index you want to register the train to
 	 * @param train - The ItemTrain you want to register to the system
 	 * @return True if the train was registered successfully but false if there is already a train with the same index*/
-	public static final boolean registerTrain(ItemTrain train){
+	public static final boolean registerTrain(IItemTrain train){
 		if(!trainRegistry.containsKey(train.getTrainRegistryID())){
 			trainRegistry.put(train.getTrainRegistryID(), train);
 			return true;

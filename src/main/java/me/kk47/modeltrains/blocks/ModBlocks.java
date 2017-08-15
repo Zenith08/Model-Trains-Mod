@@ -1,10 +1,12 @@
 package me.kk47.modeltrains.blocks;
 
 import me.kk47.modeltrains.Data;
+import me.kk47.modeltrains.client.render.Render3DPrinter;
 import me.kk47.modeltrains.client.render.RenderIndustryForrest;
 import me.kk47.modeltrains.client.render.RenderTrackbed;
 import me.kk47.modeltrains.client.render.RenderTrain;
 import me.kk47.modeltrains.items.ItemBlockTrainController;
+import me.kk47.modeltrains.tileentity.TileEntity3DPrinter;
 import me.kk47.modeltrains.tileentity.TileEntityIndustryForrest;
 import me.kk47.modeltrains.tileentity.TileEntityTrackBed;
 import me.kk47.modeltrains.tileentity.TileEntityTrainController;
@@ -33,6 +35,9 @@ public class ModBlocks {
 	public static BlockIndustryForrest forrest;
 	public static Item itemForrest;
 	
+	public static Block3DPrinter printer3d;
+	public static Item itemPrinter3d;
+	
 	@SubscribeEvent
 	public static void registerBlocks(RegistryEvent.Register<Block> event){
 		trackBed = new BlockTrackBed();
@@ -41,6 +46,9 @@ public class ModBlocks {
 		event.getRegistry().register(trainController);	
 		forrest = new BlockIndustryForrest();
 		event.getRegistry().register(forrest);
+		
+		printer3d = new Block3DPrinter();
+		event.getRegistry().register(printer3d);
 	}
 	
 	@SubscribeEvent
@@ -51,12 +59,16 @@ public class ModBlocks {
 		event.getRegistry().register(itemTrainController);
 		itemForrest = new ItemBlock(forrest).setRegistryName("forrest");
 		event.getRegistry().register(itemForrest);
+		
+		itemPrinter3d = new ItemBlock(printer3d).setRegistryName("printer-3d").setMaxStackSize(1);
+		event.getRegistry().register(itemPrinter3d);
 	}
 	
 	public static void registerTileEntities(){
 		GameRegistry.registerTileEntity(TileEntityTrackBed.class, "trackbed");
 		GameRegistry.registerTileEntity(TileEntityTrainController.class, "traincontroller");
 		GameRegistry.registerTileEntity(TileEntityIndustryForrest.class, "industry-forrest");
+		GameRegistry.registerTileEntity(TileEntity3DPrinter.class, "printer-3d");
 	}
 	
 	@SideOnly(Side.CLIENT)
@@ -74,5 +86,6 @@ public class ModBlocks {
 		//Forrest
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityIndustryForrest.class, new RenderIndustryForrest());
 		
+		ClientRegistry.bindTileEntitySpecialRenderer(TileEntity3DPrinter.class, new Render3DPrinter());
 	}
 }

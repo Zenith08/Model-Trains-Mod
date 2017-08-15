@@ -16,7 +16,7 @@ public class TileEntityIndustryForrest extends TileEntityIndustry implements ITi
 	public TileEntityIndustryForrest() {
 		this.industry = Industries.forrest;
 		super.setTimeUntilProduction(20);
-		this.setTrackInventory(new ItemStack[][]{
+		super.setTrackInventory(new ItemStack[][]{
 		{null, TRACK_EAST, null, null},
 		{null, TRACK_EAST, null, null},
 		{TRACK_NORTH, TRACK_TURN_NORTH, null, null},

@@ -21,6 +21,11 @@ public class TileEntityTrackBed extends TileEntity implements ITileEntityTrackCo
 
 	public TileEntityTrackBed(){
 		this.inventory = new ItemStack[4][4];
+		for(int x = 0; x < 4; x++) {
+			for(int y = 0; y < 4; y++) {
+				inventory[x][y] = ItemStack.EMPTY;
+			}
+		}
 	}
 
 	@Override
@@ -69,14 +74,15 @@ public class TileEntityTrackBed extends TileEntity implements ITileEntityTrackCo
 	/*	@Override
 	public ItemStack getStackInSlot(int index) {
 	    if (index < 0 || index >= this.getSizeInventory())
-	        return null;
+	        return ItemStack.EMPTY;
 	    return this.inventory[index];
 	}*/
+	
 	//2d implementation
 	@Override
 	public ItemStack getStackInSlot(int index){
 		if (index < 0 || index >= this.getSizeInventory())
-			return null;
+			return ItemStack.EMPTY;
 		int x = 0;
 		int y = index;
 		while(y >= 4){
@@ -88,19 +94,19 @@ public class TileEntityTrackBed extends TileEntity implements ITileEntityTrackCo
 
 	@Override
 	public ItemStack decrStackSize(int index, int count) {
-		if (this.getStackInSlot(index) != null) {
+		if (this.getStackInSlot(index) != ItemStack.EMPTY) {
 			ItemStack itemstack;
 
 			if (this.getStackInSlot(index).getCount() <= count) {
 				itemstack = this.getStackInSlot(index);
-				this.setInventorySlotContents(index, null);
+				this.setInventorySlotContents(index, ItemStack.EMPTY);
 				this.markDirty();
 				return itemstack;
 			} else {
 				itemstack = this.getStackInSlot(index).splitStack(count);
 
 				if (this.getStackInSlot(index).getCount() <= 0) {
-					this.setInventorySlotContents(index, null);
+					this.setInventorySlotContents(index, ItemStack.EMPTY);
 				} else {
 					//Just to show that changes happened
 					this.setInventorySlotContents(index, this.getStackInSlot(index));
@@ -110,7 +116,7 @@ public class TileEntityTrackBed extends TileEntity implements ITileEntityTrackCo
 				return itemstack;
 			}
 		} else {
-			return null;
+			return ItemStack.EMPTY;
 		}
 	}
 
@@ -125,11 +131,11 @@ public class TileEntityTrackBed extends TileEntity implements ITileEntityTrackCo
 	    if (index < 0 || index >= this.getSizeInventory())
 	        return;
 
-	    if (stack != null && stack.stackSize > this.getInventoryStackLimit())
+	    if (stack != ItemStack.EMPTY && stack.stackSize > this.getInventoryStackLimit())
 	        stack.stackSize = this.getInventoryStackLimit();
 
-	    if (stack != null && stack.stackSize == 0)
-	        stack = null;
+	    if (stack != ItemStack.EMPTY && stack.stackSize == 0)
+	        stack = ItemStack.EMPTY;
 
 	    this.inventory[index] = stack;
 	    this.markDirty();
@@ -140,10 +146,10 @@ public class TileEntityTrackBed extends TileEntity implements ITileEntityTrackCo
 		if (index < 0 || index >= this.getSizeInventory())
 			return;
 
-		if (stack != null && stack.getCount() > this.getInventoryStackLimit())
+		if (stack != ItemStack.EMPTY && stack.getCount() > this.getInventoryStackLimit())
 			stack.setCount(this.getInventoryStackLimit());
-		if (stack != null && stack.getCount() == 0)
-			stack = null;
+		if (stack != ItemStack.EMPTY && stack.getCount() == 0)
+			stack = ItemStack.EMPTY;
 
 		int x = 0;
 		int y = index;
@@ -196,13 +202,13 @@ public class TileEntityTrackBed extends TileEntity implements ITileEntityTrackCo
 	@Override
 	public void clear() {
 		for (int i = 0; i < this.getSizeInventory(); i++)
-			this.setInventorySlotContents(i, null);
+			this.setInventorySlotContents(i, ItemStack.EMPTY);
 	}
 
 	public NBTTagCompound writeSyncableDataToNBT(NBTTagCompound nbt){
 		NBTTagList list = new NBTTagList();
 		for (int i = 0; i < this.getSizeInventory(); ++i) {
-			if (this.getStackInSlot(i) != null) {
+			if (this.getStackInSlot(i) != ItemStack.EMPTY) {
 				NBTTagCompound stackTag = new NBTTagCompound();
 				stackTag.setByte("Slot", (byte) i);
 				this.getStackInSlot(i).writeToNBT(stackTag);
@@ -249,8 +255,13 @@ public class TileEntityTrackBed extends TileEntity implements ITileEntityTrackCo
 
 	@Override
 	public boolean isEmpty() {
-		// TODO Auto-generated method stub
-		return false;
+		for(int x = 0; x < 4; x++) {
+			for(int y = 0; y < 4; y++) {
+				if(inventory[x][y] != ItemStack.EMPTY)
+					return false;
+			}
+		}
+		return true;
 	}
 
 	@Override

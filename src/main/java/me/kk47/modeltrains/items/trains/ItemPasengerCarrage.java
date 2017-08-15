@@ -9,7 +9,7 @@ public class ItemPasengerCarrage extends ItemTrain {
 	public ItemPasengerCarrage(int id) {
 		super(EnumTrainType.CARRIAGE_PASSENGER, "pasengercar" + id, 2+id);
 		this.setModel(new ModelPassengerCarage());
-		this.setTexture(new ResourceLocation(Data.MODID + ":textures/trains/trainColoured" + id + ".png"));
+		this.setTexture(new ResourceLocation(Data.MODID + ":textures/trains/train-coloured" + id + ".png"));
 	}
 
 }

@@ -65,14 +65,17 @@ public class MathHelper {
 		for (int r = 0; r < M; r++) {
 			for (int c = 0; c < N; c++) {
 				ItemStack add = mat[r][c];
-				
+				ItemStack nextAdd = null;
 				if(add != null){
+//					System.out.println("Changing Item Meta from " + add.getItemDamage() + " to " + (add.getItemDamage()+1));
 					add.setItemDamage(add.getItemDamage()+1);
-					if(add.getItemDamage() >= add.getMaxDamage())
-						add.setItemDamage(0);
+					nextAdd = new ItemStack(add.getItem(), 1, add.getItemDamage()+1);
+					if(nextAdd.getItemDamage() > nextAdd.getMaxDamage()) {
+						nextAdd = new ItemStack(add.getItem(), 1, 0);
+					}
 				}
 				
-				ret[c][M-1-r] = add;
+				ret[c][M-1-r] = nextAdd;
 			}
 		}
 		return ret;

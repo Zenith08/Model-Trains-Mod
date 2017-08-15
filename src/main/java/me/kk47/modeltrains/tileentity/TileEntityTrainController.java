@@ -104,6 +104,9 @@ public class TileEntityTrainController extends TileEntity implements ITileEntity
 				trains[i] = next;
 			}
 		}
+		for(int i = 0; i < inventory.length; i++) {
+			inventory[i] = ItemStack.EMPTY;
+		}
 	}
 
 	@Override
@@ -469,25 +472,25 @@ public class TileEntityTrainController extends TileEntity implements ITileEntity
 	@Override
 	public ItemStack getStackInSlot(int index) {
 		if (index < 0 || index >= this.getSizeInventory())
-			return null;
+			return ItemStack.EMPTY;
 		return this.inventory[index];
 	}
 
 	@Override
 	public ItemStack decrStackSize(int index, int count) {
-		if (this.getStackInSlot(index) != null) {
+		if (this.getStackInSlot(index) != ItemStack.EMPTY) {
 			ItemStack itemstack;
 
 			if (this.getStackInSlot(index).getCount() <= count) {
 				itemstack = this.getStackInSlot(index);
-				this.setInventorySlotContents(index, null);
+				this.setInventorySlotContents(index, ItemStack.EMPTY);
 				this.markDirty();
 				return itemstack;
 			} else {
 				itemstack = this.getStackInSlot(index).splitStack(count);
 
 				if (this.getStackInSlot(index).getCount() <= 0) {
-					this.setInventorySlotContents(index, null);
+					this.setInventorySlotContents(index, ItemStack.EMPTY);
 				} else {
 					//Just to show that changes happened
 					this.setInventorySlotContents(index, this.getStackInSlot(index));
@@ -497,7 +500,7 @@ public class TileEntityTrainController extends TileEntity implements ITileEntity
 				return itemstack;
 			}
 		} else {
-			return null;
+			return ItemStack.EMPTY;
 		}
 	}
 
@@ -506,11 +509,11 @@ public class TileEntityTrainController extends TileEntity implements ITileEntity
 		if (index < 0 || index >= this.getSizeInventory())
 			return;
 
-		if (stack != null && stack.getCount() > this.getInventoryStackLimit())
+		if (stack != ItemStack.EMPTY && stack.getCount() > this.getInventoryStackLimit())
 			stack.setCount(this.getInventoryStackLimit());
 
-		if (stack != null && stack.getCount() == 0)
-			stack = null;
+		if (stack != ItemStack.EMPTY && stack.getCount() == 0)
+			stack = ItemStack.EMPTY;
 
 		this.inventory[index] = stack;
 		this.markDirty();
@@ -519,7 +522,7 @@ public class TileEntityTrainController extends TileEntity implements ITileEntity
 	@Override
 	public ItemStack removeStackFromSlot(int index) {
 		ItemStack stack = this.getStackInSlot(index);
-		this.setInventorySlotContents(index, null);
+		this.setInventorySlotContents(index, ItemStack.EMPTY);
 		return stack;
 	}
 
@@ -542,7 +545,7 @@ public class TileEntityTrainController extends TileEntity implements ITileEntity
 	@Override
 	public void clear() {
 		for (int i = 0; i < this.getSizeInventory(); i++)
-			this.setInventorySlotContents(i, null);
+			this.setInventorySlotContents(i, ItemStack.EMPTY);
 	}
 
 	@Override
@@ -556,8 +559,11 @@ public class TileEntityTrainController extends TileEntity implements ITileEntity
 
 	@Override
 	public boolean isEmpty() {
-		// TODO Auto-generated method stub
-		return false;
+		for(int i = 0; i < inventory.length; i++) {
+			if(inventory[i] != ItemStack.EMPTY)
+				return false;
+		}
+		return true;
 	}
 
 	@Override

@@ -8,7 +8,7 @@ import net.minecraft.util.ResourceLocation;
 public class ItemModelTrackCross extends ItemModelTrackBase{
 
 	private static ModelTrackStraightCross MODEL = new ModelTrackStraightCross();
-	private static ResourceLocation TEXTURE = new ResourceLocation(Data.MODID + ":textures/blocks/track/trackStraightCross.png");
+	private static ResourceLocation TEXTURE = new ResourceLocation(Data.MODID + ":textures/blocks/track/track-straight-cross.png");
 	
 	public ItemModelTrackCross() {
 		super("trackStraightCross");

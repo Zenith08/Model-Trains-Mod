@@ -16,7 +16,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 public class ItemModelTrackTurn extends ItemModelTrackBase {
 
 	private static ModelTrackTurn MODEL = new ModelTrackTurn();
-	private static ResourceLocation TEXTURE = new ResourceLocation(Data.MODID + ":textures/blocks/track/trackTurn.png");
+	private static ResourceLocation TEXTURE = new ResourceLocation(Data.MODID + ":textures/blocks/track/track-turn.png");
 
 	private final String[] metadataNames = new String[]{"east", "north", "west", "south"};
 	
