@@ -40,7 +40,7 @@ public class ModItems {
 		toyTrain = new ItemToyTrain();
 		event.getRegistry().register(toyTrain);
 		
-		loggingCar=new ItemLoggingCar(4);
+		loggingCar=new ItemLoggingCar(16);
 		event.getRegistry().register(loggingCar);
 		
 /*		dummyTrain = new ItemDummyTrain();

@@ -1,5 +1,6 @@
 package me.kk47.modeltrains.gui;
 
+import me.kk47.modeltrains.gui.slot.SlotTrain;
 import me.kk47.modeltrains.tileentity.TileEntityTrainController;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.Container;
@@ -39,8 +40,8 @@ public class ContainerTrainController extends Container{
 
 	@Override
 	public ItemStack transferStackInSlot(EntityPlayer playerIn, int fromSlot) {
-		ItemStack previous = null;
-		Slot slot = (Slot) this.inventorySlots.get(fromSlot);
+		ItemStack previous = ItemStack.EMPTY;
+		Slot slot = this.inventorySlots.get(fromSlot);
 
 		if (slot != null && slot.getHasStack()) {
 			ItemStack current = slot.getStack();
@@ -50,12 +51,12 @@ public class ContainerTrainController extends Container{
 			//End Custom Behaviour
 
 			if (current.getCount() == 0)
-				slot.putStack((ItemStack) null);
+				slot.putStack(ItemStack.EMPTY);
 			else
 				slot.onSlotChanged();
 
 			if (current.getCount() == previous.getCount())
-				return null;
+				return ItemStack.EMPTY;
 			slot.onTake(playerIn, current);
 			
 		}

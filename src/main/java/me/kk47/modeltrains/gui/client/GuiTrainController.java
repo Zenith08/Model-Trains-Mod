@@ -5,6 +5,8 @@ import java.io.IOException;
 import me.kk47.modeltrains.Data;
 import me.kk47.modeltrains.ModelTrains;
 import me.kk47.modeltrains.gui.ContainerTrainController;
+import me.kk47.modeltrains.gui.client.button.ReverserButton;
+import me.kk47.modeltrains.gui.client.button.SpeedButton;
 import me.kk47.modeltrains.network.PacketChangeTrainDirection;
 import me.kk47.modeltrains.network.PacketChangeTrainSpeed;
 import me.kk47.modeltrains.tileentity.TileEntityTrainController;

@@ -48,7 +48,6 @@ public class BlockTrainController extends Block implements IBlockTrackContainer,
 	@Override
 	public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ){
 		if (!worldIn.isRemote) {
-//			System.out.println("Displaying all available data on player#opengui: Mod " + ModelTrains.instance + " ID " + MTGuiHandler.GUI_TRAINCONTROLLER_ID + " worldIn " + worldIn + " position " + pos.getX() + ", " + pos.getY() + ", " + pos.getZ());
 			playerIn.openGui(ModelTrains.instance, MTGuiHandler.GUI_TRAINCONTROLLER_ID, worldIn, pos.getX(), pos.getY(), pos.getZ());
 		}
 		return true;

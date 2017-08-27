@@ -3,6 +3,7 @@ package me.kk47.modeltrains;
 import me.kk47.modeltrains.math.TurnHelper;
 import me.kk47.modeltrains.network.PacketChangeTrainDirection;
 import me.kk47.modeltrains.network.PacketChangeTrainSpeed;
+import me.kk47.modeltrains.network.PacketPrintTrain;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.Mod.Instance;
@@ -40,9 +41,11 @@ public class ModelTrains {
     	proxy.init(e);
     	
     	packetHandler = NetworkRegistry.INSTANCE.newSimpleChannel(Data.MODID);
+    	
     	packetHandler.registerMessage(PacketChangeTrainSpeed.HandlePacketChangeTrainSpeed.class, PacketChangeTrainSpeed.class, 0, Side.SERVER);
     	packetHandler.registerMessage(PacketChangeTrainDirection.HandlePacketChangeTrainDirection.class, PacketChangeTrainDirection.class, 1, Side.SERVER);
-    }
+    	packetHandler.registerMessage(PacketPrintTrain.HandlePacketPrintTrain.class, PacketPrintTrain.class, 2, Side.SERVER);
+   }
 
     @EventHandler
     public void postInit(FMLPostInitializationEvent e) {

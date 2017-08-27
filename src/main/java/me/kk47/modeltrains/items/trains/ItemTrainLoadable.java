@@ -9,7 +9,7 @@ import me.kk47.modeltrains.industry.MTResource;
 import me.kk47.modeltrains.industry.MTResources;
 import net.minecraft.client.model.ModelBase;
 
-public class ItemTrainLoadable extends ItemTrain implements IItemTrainLoadable {
+public abstract class ItemTrainLoadable extends ItemTrain implements IItemTrainLoadable {
 
 	protected Map<String, ModelBase> loadableResources;
 	protected int maxResourcesLoadable = 5;

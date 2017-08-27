@@ -1,7 +1,9 @@
 package me.kk47.modeltrains.gui;
 
+import me.kk47.modeltrains.gui.client.GuiPrinter3D;
 import me.kk47.modeltrains.gui.client.GuiTrackbed;
 import me.kk47.modeltrains.gui.client.GuiTrainController;
+import me.kk47.modeltrains.tileentity.TileEntity3DPrinter;
 import me.kk47.modeltrains.tileentity.TileEntityTrackBed;
 import me.kk47.modeltrains.tileentity.TileEntityTrainController;
 import net.minecraft.entity.player.EntityPlayer;
@@ -13,6 +15,7 @@ public class MTGuiHandler implements IGuiHandler{
 
 	public static final int GUI_TRACKBED_ID = 0;
 	public static final int GUI_TRAINCONTROLLER_ID = 1;
+	public static final int GUI_PRINTER_3D = 2;
 
 	public MTGuiHandler() {
 
@@ -25,6 +28,9 @@ public class MTGuiHandler implements IGuiHandler{
 			return new ContainerTrackbed(player.inventory, (TileEntityTrackBed) world.getTileEntity(new BlockPos(x, y, z)));
 		if(ID == GUI_TRAINCONTROLLER_ID)
 			return new ContainerTrainController(player.inventory, (TileEntityTrainController) world.getTileEntity(new BlockPos(x, y, z)));
+		if(ID == GUI_PRINTER_3D) {
+			return new ContainerPrinter3D(player.inventory, (TileEntity3DPrinter) world.getTileEntity(new BlockPos(x, y, z)));
+		}
 		return null;
 	}
 
@@ -35,6 +41,8 @@ public class MTGuiHandler implements IGuiHandler{
 			return new GuiTrackbed(player.inventory, (TileEntityTrackBed) world.getTileEntity(new BlockPos(x, y, z)));
 		if(ID == GUI_TRAINCONTROLLER_ID)
 			return new GuiTrainController(player.inventory, (TileEntityTrainController) world.getTileEntity(new BlockPos(x, y, z)));
+		if(ID == GUI_PRINTER_3D)
+			return new GuiPrinter3D(player.inventory, (TileEntity3DPrinter) world.getTileEntity(new BlockPos(x, y, z)));
 		return null;
 	}
 

@@ -1,4 +1,4 @@
-package me.kk47.modeltrains.gui;
+package me.kk47.modeltrains.gui.slot;
 
 import javax.annotation.Nullable;
 

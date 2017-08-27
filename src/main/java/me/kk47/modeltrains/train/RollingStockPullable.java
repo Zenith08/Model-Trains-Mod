@@ -42,7 +42,7 @@ public class RollingStockPullable extends RollingStock {
 		distance = Math.sqrt(((xDistance*xDistance) + (yDistance*yDistance)));
 
 		//If both of the above statements are false we are turning
-		//TODO - We have a problem on turns
+		//FIXME - We have a problem on turns
 
 		//The actual logic
 		//This will update our speed and then factor it in the next tick

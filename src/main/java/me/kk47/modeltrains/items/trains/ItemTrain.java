@@ -62,5 +62,9 @@ public abstract class ItemTrain extends Item implements IItemTrain {
 	protected void setTexture(ResourceLocation texture){
 		this.texture = texture;
 	}
+	
+	public Item asItem() {
+		return this;
+	}
 
 }

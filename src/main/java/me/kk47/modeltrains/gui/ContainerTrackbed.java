@@ -1,5 +1,6 @@
 package me.kk47.modeltrains.gui;
 
+import me.kk47.modeltrains.gui.slot.SlotTrack;
 import me.kk47.modeltrains.tileentity.TileEntityTrackBed;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.Container;
@@ -46,8 +47,9 @@ public class ContainerTrackbed extends Container{
 	}
 
 	@Override
+	//FIXME This isn't working for anything at all
 	public ItemStack transferStackInSlot(EntityPlayer playerIn, int fromSlot) {
-		ItemStack previous = null;
+		ItemStack previous = ItemStack.EMPTY;
 		Slot slot = (Slot) this.inventorySlots.get(fromSlot);
 
 		if (slot != null && slot.getHasStack()) {
@@ -58,19 +60,19 @@ public class ContainerTrackbed extends Container{
 			if (fromSlot < 16) {
 	            // From TE Inventory to Player Inventory
 	            if (!this.mergeItemStack(current, 9, 45, true))
-	                return null;
+	                return ItemStack.EMPTY;
 	        } else {
 	            // From Player Inventory to TE Inventory
 	            if (!this.mergeItemStack(current, 0, 16, false))
-	                return null;
+	                return ItemStack.EMPTY;
 	        }
 			if (current.getCount() == 0)
-				slot.putStack((ItemStack) null);
+				slot.putStack(ItemStack.EMPTY);
 			else
 				slot.onSlotChanged();
 
 			if (current.getCount() == previous.getCount())
-				return null;
+				return ItemStack.EMPTY;
 			slot.onTake(playerIn, current);
 			
 		}
@@ -93,7 +95,7 @@ public class ContainerTrackbed extends Container{
 	            slot = (Slot) this.inventorySlots.get(index);
 	            stackinslot = slot.getStack();
 
-	            if (stackinslot != null && stackinslot.getItem() == stack.getItem() && (!stack.getHasSubtypes() || stack.getMetadata() == stackinslot.getMetadata()) && ItemStack.areItemStackTagsEqual(stack, stackinslot)) {
+	            if (stackinslot != ItemStack.EMPTY && stackinslot.getItem() == stack.getItem() && (!stack.getHasSubtypes() || stack.getMetadata() == stackinslot.getMetadata()) && ItemStack.areItemStackTagsEqual(stack, stackinslot)) {
 	                int l = stackinslot.getCount() + stack.getCount();
 	                int maxsize = Math.min(stack.getMaxStackSize(), slot.getItemStackLimit(stack));
 
@@ -132,7 +134,7 @@ public class ContainerTrackbed extends Container{
 	            stackinslot = slot.getStack();
 
 	            // Forge: Make sure to respect isItemValid in the slot.
-	            if (stackinslot == null && slot.isItemValid(stack)) {
+	            if (stackinslot == ItemStack.EMPTY && slot.isItemValid(stack)) {
 	                if (stack.getCount() < slot.getItemStackLimit(stack)) {
 	                    slot.putStack(stack.copy());
 //	                    stack.stackSize = 0;
