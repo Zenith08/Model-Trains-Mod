@@ -8,6 +8,7 @@ import me.kk47.modeltrains.client.model.ModelForrest;
 import me.kk47.modeltrains.tileentity.TileEntityIndustryForrest;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.ModelBase;
+import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.entity.Entity;
 import net.minecraft.item.ItemStack;
@@ -71,16 +72,15 @@ public class RenderIndustryForrest extends TileEntitySpecialRenderer<TileEntityI
 	//TODO correct modifiers
 	public void renderModel(TileEntity te, double x, double y, double z, ModelBase model, ResourceLocation texture, float scale, float modifierX, float modifierY, float modifierZ, float rotation){
 		//The PushMatrix tells the renderer to "start" doing something.
-		GL11.glPushMatrix();
+		GlStateManager.pushMatrix();
 		//This is setting the initial location.
 		//		GL11.glTranslatef((float) x + 0.5F, (float) y + 1.5F, (float) z + 0.5F);
-		GL11.glTranslatef((float) x + 0.125F, (float) y+0.4F, (float) z + 0.125F);
+		GlStateManager.translate((float) x + 0.125F, (float) y+0.4F, (float) z + 0.125F);
 		//Applies Scaling
-		GL11.glScalef(scale, scale, scale);
+		GlStateManager.scale(scale, scale, scale);
 		//Applies new translation
-		GL11.glTranslatef(modifierX, modifierY-0.1F, modifierZ);
-
-		GL11.glRotated(rotation, 0.0, 1.0, 0.0);
+		GlStateManager.translate(modifierX, modifierY-0.1F, modifierZ);
+		GlStateManager.rotate(rotation, 0.0F, 1.0F, 0.0F);
 		//This disables lighting on the model so that it doesn't factor being in a block when rendered
 		//			GL11.glDisable(GL11.GL_LIGHTING);
 
@@ -89,16 +89,16 @@ public class RenderIndustryForrest extends TileEntitySpecialRenderer<TileEntityI
 		Minecraft.getMinecraft().renderEngine.bindTexture(texture);
 
 		//This rotation part is very important! Without it, your model will render upside-down! And for some reason you DO need PushMatrix again!                       
-		GL11.glPushMatrix();
-		GL11.glRotatef(180F, 0.0F, 0.0F, 1.0F);
+		GlStateManager.pushMatrix();
+		GlStateManager.rotate(180F, 0.0F, 0.0F, 1.0F);
 		//A reference to your Model file. Again, very important.
 		model.render((Entity)null, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0625F);
 		//Tell it to stop rendering for both the PushMatrix's
-		GL11.glPopMatrix();
-		GL11.glPopMatrix();
+		GlStateManager.popMatrix();
+		GlStateManager.popMatrix();
 	}
 	
-	public void renderModel(TileEntity te, double x, double y, double z, ModelBase model, ResourceLocation texture){
+/*	public void renderModel(TileEntity te, double x, double y, double z, ModelBase model, ResourceLocation texture){
 		//The PushMatrix tells the renderer to "start" doing something.
 		GL11.glPushMatrix();
 		//This is setting the initial location.
@@ -119,5 +119,5 @@ public class RenderIndustryForrest extends TileEntitySpecialRenderer<TileEntityI
 		//Tell it to stop rendering for both the PushMatrix's
 		GL11.glPopMatrix();
 		GL11.glPopMatrix();
-	}
+	}*/
 }

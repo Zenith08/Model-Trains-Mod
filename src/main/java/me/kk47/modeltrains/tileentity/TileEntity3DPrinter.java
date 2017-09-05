@@ -193,7 +193,7 @@ public class TileEntity3DPrinter extends TileEntity implements ITickable, IInven
 
 	@Override
 	public int getFieldCount() {
-		return 3; //2 fields are in use. Field 0 and Field 1.
+		return 3; //3 fields are in use. Field 0, Field 1, and Field 2.
 	}
 
 	@Override
