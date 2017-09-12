@@ -1,0 +1,13 @@
+{
+    "type": "minecraft:crafting_shapeless",
+    "ingredients": [
+        {
+            "item": "modeltrains:track-straight",
+			"data": 1
+        }
+    ],
+    "result": {
+        "item": "modeltrains:track-straight",
+		"data": 0
+    }
+}

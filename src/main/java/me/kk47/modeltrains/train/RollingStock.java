@@ -59,7 +59,7 @@ public class RollingStock implements ITickable {
 			//			System.out.println("track");
 			ItemStack is = te.getTrackAt(pos);
 			//Straight track logic -------------------------------------------------------------------------
-			if(is.getItem().getUnlocalizedName().contains("Straight")){
+			if(is.getItem().getUnlocalizedName().contains("straight")){
 				//Correct for facing the wrong direction ---------------------------------------------------
 				if(is.getItem().getUnlocalizedName(is).contains("east")){
 					//					System.out.println("on East Track and at pos " + pos.toString());
@@ -87,7 +87,7 @@ public class RollingStock implements ITickable {
 				}
 			//End straight track logic ---------------------------------------------------------------------
 			//Start turning logic --------------------------------------------------------------------------
-			}else if(is.getItem().getUnlocalizedName().contains("Corner")){
+			}else if(is.getItem().getUnlocalizedName().contains("corner")){
 				if(pos.getYaw() == 0){
 					pos.setY(pos.getY()-speed);
 				}else if(pos.getYaw() == 90){

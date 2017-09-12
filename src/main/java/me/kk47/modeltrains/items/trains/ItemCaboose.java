@@ -11,6 +11,7 @@ public class ItemCaboose extends ItemTrain {
 	public ItemCaboose(int id) {
 		super(EnumTrainType.CARRIAGE_PASSENGER, "caboose" + id, id + 25);
 		this.addUERI(new UERITechne(new ModelCaboose(), new ResourceLocation(Data.MODID + ":textures/trains/train-coloured" + id + ".png")));
+		this.setCreativeTab(null);
 	}
 
 	@Override
@@ -19,7 +20,6 @@ public class ItemCaboose extends ItemTrain {
 	}
 
 	@Override
-	//TODO Implement Per Colour
 	public Printer3DRecipe getPrintingRecipe(int trainRegistryID) {
 		return new Printer3DRecipe();
 	}

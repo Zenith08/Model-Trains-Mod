@@ -5,6 +5,7 @@ import org.lwjgl.util.vector.Vector3f;
 import org.lwjgl.util.vector.Vector4f;
 
 import me.kk47.ueri.util.RenderTransform;
+import net.minecraft.client.renderer.GlStateManager;
 
 public abstract class UERIRenderable {
 
@@ -38,17 +39,15 @@ public abstract class UERIRenderable {
 	}
 	
 	public void render() {
-//		System.out.println("UERI Render Method Called");
 		transform.apply();
 		if(isUsingColour()) {
-			GL11.glColor3f(colourComponent.x, colourComponent.y, colourComponent.z);
+			GlStateManager.color(colourComponent.x, colourComponent.y, colourComponent.z);
 		}
-//		System.out.println("UERI GL Stuff Done. Calling RenderModel");
 		renderModel();
+		//Resets the colour
+		GlStateManager.color(1, 1, 1, 1);
 	}
 	
-	//TODO This is going to need several arguments.
-	//Will it?
 	protected abstract void renderModel();
 	
 }

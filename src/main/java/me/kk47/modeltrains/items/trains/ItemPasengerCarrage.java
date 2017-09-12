@@ -11,6 +11,7 @@ public class ItemPasengerCarrage extends ItemTrain {
 	public ItemPasengerCarrage(int id) {
 		super(EnumTrainType.CARRIAGE_PASSENGER, "pasengercar" + id, 2+id);
 		this.addUERI(new UERITechne(new ModelPassengerCarage(), new ResourceLocation(Data.MODID + ":textures/trains/train-coloured" + id + ".png")));
+		this.setCreativeTab(null);
 	}
 
 	@Override
@@ -19,7 +20,6 @@ public class ItemPasengerCarrage extends ItemTrain {
 	}
 
 	@Override
-	//TODO Implement Per Colour
 	public Printer3DRecipe getPrintingRecipe(int trainRegistryID) {
 		return new Printer3DRecipe();
 	}

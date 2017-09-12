@@ -42,42 +42,11 @@ public class RenderTrain extends TileEntitySpecialRenderer<TileEntityTrainContro
 				IItemTrain it = trains[i].getTrainItem();
 				ModelBase model = null;
 
-				/*					if(it instanceof IItemTrainLoadable){
-//						System.out.println("Rendering loadable train model");
-						model = ((IItemTrainLoadable) it).getModel(r.getLoadedResource().getName());
-					}else{
-						model = it.getModel();
-					}
-
-/*					boolean b = model instanceof ModelLoggingCarLogs;
-					System.out.println("Is actually right model " + b);
-
-					boolean c = model instanceof ModelLoggingCarEmpty;
-					if(c)
-						System.out.println("Rendering empty logging car model");*/
-
-				/*					float rotation = 0.0F;
-					if(model instanceof MTmModelBase){
-						MTmModelBase mtmmodel = (MTmModelBase) model;
-						rotation = mtmmodel.getRotation();
-					}
-				 */
-				//					renderModel(te, x, y, z, model, it.getTexture(), 
-				//						0.25F, r.getPos().getX(), 0.0F, r.getPos().getY(), r.getPos().getYaw() + rotation);
-
 				List<UERIRenderable> trainModels = it.getRenderables(te.getStackInSlot(i));
 				for(UERIRenderable renderable : trainModels) {
 					renderUERI(te, x, y, z, renderable, 0.25F, trains[i].getPos().getX(), 0.0F, trains[i].getPos().getY(), trains[i].getPos().getYaw());
 				}
 			}
-
-			//Test render code
-			/*			this.renderModel(traincontroller, x, y, z, dummytrain, dummytexture, 
-					0.25F, traincontroller.getTrain().getPos().getX(), 0.0F, 
-					traincontroller.getTrain().getPos().getY(), traincontroller.getTrain().getPos().getYaw());
-			this.renderModel(traincontroller, x, y, z, dummytrain, dummytexture, 
-					0.25F, traincontroller.getTrain2().getPos().getX(), 0.0F, 
-					traincontroller.getTrain2().getPos().getY(), traincontroller.getTrain2().getPos().getYaw());*/
 		}
 	}
 
@@ -114,11 +83,9 @@ public class RenderTrain extends TileEntitySpecialRenderer<TileEntityTrainContro
 		GL11.glPopMatrix();
 	}
 
-	//XXX Just might be the new renderer...
 	public void renderUERI(TileEntity te, double x, double y, double z, UERIRenderable renderable, float scale, float modifierX, float modifierY, float modifierZ, float rotation) {
 		//		System.out.println("RenderUERI method called");
 		//The PushMatrix tells the renderer to "start" doing something.
-//		GL11.glPushMatrix();
 		GlStateManager.pushMatrix();
 		//This is setting the initial location.
 		//		GL11.glTranslatef((float) x + 0.5F, (float) y + 1.5F, (float) z + 0.5F);

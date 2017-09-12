@@ -50,8 +50,8 @@ public class RollingStockPullable extends RollingStock {
 		if(cartAhead.getSpeed()>0){
 			frontTrainMoving = true;
 		}
-		
-/*		if(this.isGoingForwards()){
+
+		/*		if(this.isGoingForwards()){
 			if(distance == getOptimalDistance()+VARIANCE){
 				speed=cartAhead.speed;
 			}else if(distance > getOptimalDistance()+VARIANCE){
@@ -64,7 +64,7 @@ public class RollingStockPullable extends RollingStock {
 		}*/
 
 		//Now that we have distance and frontTrainMoving we can do our speed math
-				if(frontTrainMoving && distance >= getOptimalDistance()+VARIANCE){
+		if(frontTrainMoving && distance >= getOptimalDistance()+VARIANCE){
 			speed = cartAhead.getSpeed();
 		}else if(frontTrainMoving && distance <= getOptimalDistance()-VARIANCE && cartAhead.speed < this.speed){
 			speed--;

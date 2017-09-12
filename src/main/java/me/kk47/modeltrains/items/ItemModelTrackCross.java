@@ -11,7 +11,7 @@ public class ItemModelTrackCross extends ItemModelTrackBase{
 	private static ResourceLocation TEXTURE = new ResourceLocation(Data.MODID + ":textures/blocks/track/track-straight-cross.png");
 	
 	public ItemModelTrackCross() {
-		super("trackStraightCross");
+		super("track-straight-cross");
 	}
 
 	@Override
