@@ -9,7 +9,7 @@ import org.lwjgl.util.vector.Vector3f;
 import me.kk47.modeltrains.Data;
 import me.kk47.modeltrains.ModelTrains;
 import me.kk47.modeltrains.api.IItemTrain;
-import me.kk47.modeltrains.client.model.ModelPassengerCarage;
+import me.kk47.modeltrains.client.model.ModelCaboose;
 import me.kk47.modeltrains.crafting.Printer3DRecipe;
 import me.kk47.ueri.UERIRenderable;
 import me.kk47.ueri.UERITechne;
@@ -70,9 +70,10 @@ public class ItemCabooseColourable extends Item implements IItemColor, IItemTrai
 	public List<UERIRenderable> getRenderables(ItemStack stack) {
 		out = new ArrayList<UERIRenderable>();
 		if(stack.getTagCompound() != null) {
-			out.add(new UERITechne(new RenderTransform(), true, new Vector3f(stack.getTagCompound().getFloat("red"), stack.getTagCompound().getFloat("green"), stack.getTagCompound().getFloat("blue")), new ModelPassengerCarage(), new ResourceLocation(Data.MODID + ":textures/trains/train-coloured-grey.png")));
+			out.add(new UERITechne(new RenderTransform(), true, new Vector3f(stack.getTagCompound().getFloat("red"), stack.getTagCompound().getFloat("green"), stack.getTagCompound().getFloat("blue")), new ModelCaboose(), new ResourceLocation(Data.MODID + ":textures/trains/train-coloured-grey.png")));
+			out.add(new UERITechne(new ModelCaboose(), new ResourceLocation(Data.MODID + ":textures/trains/train-coloured-static.png")));
 		}else {
-			out.add(new UERITechne(new ModelPassengerCarage(), new ResourceLocation(Data.MODID + ":textures/trains/train-coloured-grey.png")));
+			out.add(new UERITechne(new ModelCaboose(), new ResourceLocation(Data.MODID + ":textures/trains/train-coloured-grey.png")));
 		}
 		return out;
 	}
