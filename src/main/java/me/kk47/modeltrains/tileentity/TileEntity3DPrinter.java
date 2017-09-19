@@ -1,6 +1,10 @@
 package me.kk47.modeltrains.tileentity;
 
+import javax.annotation.Nullable;
+
 import me.kk47.modeltrains.Data;
+import me.kk47.modeltrains.MTConfig;
+import me.kk47.modeltrains.blocks.ModBlocks;
 import me.kk47.modeltrains.client.model.Model3DPrinter;
 import me.kk47.modeltrains.crafting.Printer3DRecipe;
 import me.kk47.modeltrains.items.trains.TrainRegistry;
@@ -12,14 +16,15 @@ import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.ItemStackHelper;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.network.NetworkManager;
+import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ITickable;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.WorldServer;
 
-//TODO Sync Client and Server more
-//TODO Mark Dirty when printing Starts
+//TODO Implement Colourable Stuff
 public class TileEntity3DPrinter extends TileEntity implements ITickable, IInventory{
 
 	private Model3DPrinter model = new Model3DPrinter();
@@ -32,44 +37,52 @@ public class TileEntity3DPrinter extends TileEntity implements ITickable, IInven
 	private int printingTrainId;
 	private boolean canPrint = true;
 
-	public TileEntity3DPrinter() { //NBT?
+	public TileEntity3DPrinter() {
 		inventory = NonNullList.withSize(5, ItemStack.EMPTY);
 
 		isPrinting = false;
 	}
 
+	private byte lastUpdate = MTConfig.TRACKBED_UPDATE_RATE;
+
 	@Override
 	public void update() {
-		//TODO Use this to sync tick and frames together!
-		//TODO Use this to check client server stuff!
 		if(isPrinting) {
 			printingTime+=1;
 //			System.out.println("Update with isPrinting = true and print time = " + printingTime);
 			if(printingTime >= 2886) {
 				setInventorySlotContents(4, new ItemStack(TrainRegistry.getTrain(printingTrainId).asItem(), 1));
 				isPrinting = false;
-//				System.out.println("Finished Print and set item");
+				//				System.out.println("Finished Print and set item");
 			}
-//			System.out.println("Checked Print time");
+			//			System.out.println("Checked Print time");
 			while(model.getFrame() < printingTime*3) {
 				model.updateFrame();
 			}
-//			System.out.println("Synchronized model with tick");
+			//System.out.println("Synchronized model with tick");
 			this.markDirty();
 		}else {
-			
+
 		}
-		
+
 		if(getStackInSlot(4).getCount() == 0 && model.getFrame() >= 8658) {
 			canPrint = true;
 			model = new Model3DPrinter();
+		}
+ 
+		//Synchronization stuff
+		lastUpdate--;
+		if(lastUpdate == 0){
+			lastUpdate = MTConfig.TRACKBED_UPDATE_RATE;
+			world.notifyBlockUpdate(pos, ModBlocks.trackBed.getDefaultState(), ModBlocks.trackBed.getDefaultState(), 1);
+			this.markDirty();
 		}
 	}
 
 	//The Renderer can call this per frame rither than per tick
 	public void updateModelAnimation() {
 		if(isPrinting) {
-			model.updateFrame(); //TODO reset this each time we finish a print
+			model.updateFrame();
 		}
 	}
 
@@ -84,18 +97,51 @@ public class TileEntity3DPrinter extends TileEntity implements ITickable, IInven
 	//Packet Handling ----------------------------------------------------
 	PacketPrintTrain lastPacket = new PacketPrintTrain();
 	public synchronized void handlePrintPacket(PacketPrintTrain packet){
+		System.out.println("Handle Printing Packet");
 		lastPacket = packet;
 		((WorldServer) world).addScheduledTask(new Runnable() {
 			@Override
 			public void run() {
+				System.out.println("Attempting to start print");
 				tryStartPrint();
 			}
 		});
 	}
-	
+
+	//Client Server Synchronization
+
+	//Called on Server side
+	@Nullable
+	@Override
+	public SPacketUpdateTileEntity getUpdatePacket(){
+		return new SPacketUpdateTileEntity(this.pos, 0, getUpdateTag());
+	}
+
+	//Server
+	@Override
+	public NBTTagCompound getUpdateTag(){
+		NBTTagCompound syncData = new NBTTagCompound();
+		syncData.setInteger("PrintingTime", printingTime);
+		syncData.setBoolean("IsPrinting", isPrinting);
+		syncData.setInteger("PrintingTrainId", printingTrainId);
+		syncData.setBoolean("CanPrint", canPrint);
+		return syncData;
+	}
+
+	//Client
+	@Override
+	public void onDataPacket(NetworkManager net, SPacketUpdateTileEntity pkt){
+		NBTTagCompound compound = pkt.getNbtCompound();
+
+		printingTime = compound.getInteger("PrintingTime");
+		isPrinting = compound.getBoolean("IsPrinting");
+		printingTrainId = compound.getInteger("PrintingTrainId");
+		canPrint = compound.getBoolean("CanPrint");
+	}
+
 	public void tryStartPrint() {
 		Printer3DRecipe recipe = TrainRegistry.getTrain(lastPacket.trainRegistryID).getPrintingRecipe(lastPacket.trainRegistryID);
-		
+
 		if(getStackInSlot(4) == ItemStack.EMPTY && 
 				getStackInSlot(0).getCount() >= recipe.getClay() &&
 				getStackInSlot(1).getCount() >= recipe.getRed() &&
@@ -112,26 +158,26 @@ public class TileEntity3DPrinter extends TileEntity implements ITickable, IInven
 			decrStackSize(3, recipe.getBlue());
 
 			printingTime = 0;
-//			System.out.println("Print started");
+			
+			this.markDirty(); //The printing can start so save that it has started
 		}
 	}
 
 	public boolean canPrint() {
 		return canPrint;
 	}
-	
+
 	public boolean isPrinting() {
 		return isPrinting;
 	}
 
-	//Lets us save read and write time.
-	//TODO Implement
+	//Lets us save read and write printing time and other stuff
 	@Override
 	public void readFromNBT(NBTTagCompound compound)
 	{
 		super.readFromNBT(compound);
 		this.printingTime = compound.getInteger("PrintingTime");
-		this.isPrinting = compound.getBoolean("PrintingTime");
+		this.isPrinting = compound.getBoolean("IsPrinting");
 		ItemStackHelper.loadAllItems(compound, this.inventory);
 		this.printingTrainId = compound.getInteger("PrintingTrainId");
 		this.canPrint = compound.getBoolean("CanPrint");
@@ -148,7 +194,7 @@ public class TileEntity3DPrinter extends TileEntity implements ITickable, IInven
 		compound.setBoolean("CanPrint", canPrint);
 		return compound;
 	}
-	
+
 	//Code added by IInventory
 
 	@Override

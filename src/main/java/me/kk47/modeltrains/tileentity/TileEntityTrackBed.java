@@ -38,13 +38,11 @@ public class TileEntityTrackBed extends TileEntity implements ITileEntityTrackCo
 	@Nullable
 	@Override
 	public SPacketUpdateTileEntity getUpdatePacket(){
-		//		System.out.println("<Server> sending update packet");
 		return new SPacketUpdateTileEntity(this.pos, 0, getUpdateTag());
 	}
 
 	//Server
 	public NBTTagCompound getUpdateTag(){
-		//		System.out.println("<Server> get update tag");
 		NBTTagCompound syncData = new NBTTagCompound();
 		this.writeSyncableDataToNBT(syncData);
 		return syncData;
@@ -52,7 +50,6 @@ public class TileEntityTrackBed extends TileEntity implements ITileEntityTrackCo
 
 	//Client
 	public void onDataPacket(NetworkManager net, SPacketUpdateTileEntity pkt){
-		//		System.out.println("<Client> recieved packet");
 		readSyncableDataFromNBT(pkt.getNbtCompound());
 	}
 
