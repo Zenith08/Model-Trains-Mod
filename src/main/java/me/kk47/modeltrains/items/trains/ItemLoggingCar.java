@@ -4,7 +4,6 @@ import me.kk47.modeltrains.Data;
 import me.kk47.modeltrains.client.model.ModelLoggingCarEmpty;
 import me.kk47.modeltrains.client.model.ModelLoggingCarLogs;
 import me.kk47.modeltrains.crafting.Printer3DRecipe;
-import me.kk47.modeltrains.industry.MTResources;
 import net.minecraft.util.ResourceLocation;
 
 public class ItemLoggingCar extends ItemTrainLoadable {

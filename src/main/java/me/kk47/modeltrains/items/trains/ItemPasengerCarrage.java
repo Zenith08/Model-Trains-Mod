@@ -21,7 +21,7 @@ public class ItemPasengerCarrage extends ItemTrain {
 	@Override
 	//TODO Implement Per Colour
 	public Printer3DRecipe getPrintingRecipe(int trainRegistryID) {
-		return new Printer3DRecipe();
+		return new Printer3DRecipe(1, 1, 1, 1);
 	}
 
 }

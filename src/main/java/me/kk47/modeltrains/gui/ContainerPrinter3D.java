@@ -54,15 +54,20 @@ public class ContainerPrinter3D extends Container{
 			ItemStack current = slot.getStack();
 			previous = current.copy();
 			if(current != ItemStack.EMPTY) {
-				//TODO Optimize for ItemTrain (When added)
-				// [...] Custom behaviour
-				if(fromSlot <= 3) {
+				// [...] Custom behaviour		
+				
+				if(fromSlot <= 4) {
 					//Transfers the item from the TE to the player's inventory.
-					for(int i = 4; i < this.inventorySlots.size(); i++) {
+					for(int i = 5; i < this.inventorySlots.size(); i++) {
 						if(inventorySlots.get(i).getHasStack()) {
 							if(inventorySlots.get(i).getStack().getItem() == current.getItem()) {
 								if(inventorySlots.get(i).getStack().getCount() + current.getCount() > inventorySlots.get(i).getSlotStackLimit()) {
-									//Then don't do anything at all and keep going.
+									int c = inventorySlots.get(i).getStack().getCount() + current.getCount() - inventorySlots.get(i).getSlotStackLimit();
+									inventorySlots.get(i).getStack().setCount(inventorySlots.get(i).getSlotStackLimit());
+									inventorySlots.get(i).onSlotChanged();
+									inventorySlots.get(fromSlot).getStack().setCount(c);
+									inventorySlots.get(fromSlot).onSlotChanged(); //Shows that the change happened
+									
 								}else {
 									inventorySlots.get(i).getStack().setCount(inventorySlots.get(i).getStack().getCount() + current.getCount());
 									inventorySlots.get(i).onSlotChanged();
@@ -81,9 +86,103 @@ public class ContainerPrinter3D extends Container{
 					}
 				}else {
 					if(current.getItem() == Items.DYE) {
-						//Filter based on dye
+						if(current.getItemDamage() == 1) {
+							int i = 1;
+							if(inventorySlots.get(i).getHasStack()) {
+								if(inventorySlots.get(i).getStack().getCount() + current.getCount() > inventorySlots.get(i).getSlotStackLimit()) {
+									int c = current.getCount() - (inventorySlots.get(i).getSlotStackLimit() - inventorySlots.get(i).getStack().getCount());
+									inventorySlots.get(i).getStack().setCount(inventorySlots.get(i).getSlotStackLimit());
+									inventorySlots.get(i).onSlotChanged(); //Shows that the change happened
+									inventorySlots.get(fromSlot).getStack().setCount(c);
+									inventorySlots.get(fromSlot).onSlotChanged(); //Shows that the change happened
+								} else {
+									inventorySlots.get(i).getStack().setCount(inventorySlots.get(i).getStack().getCount() + current.getCount());
+									inventorySlots.get(i).onSlotChanged(); //Shows that the change happened
+									inventorySlots.get(fromSlot).putStack(ItemStack.EMPTY);
+									inventorySlots.get(fromSlot).onSlotChanged(); //Shows that the change happened
+								
+								}
+							} else {
+								inventorySlots.get(i).putStack(current.copy());
+								inventorySlots.get(i).onSlotChanged(); //Shows that the change happened
+								inventorySlots.get(fromSlot).putStack(ItemStack.EMPTY);
+								inventorySlots.get(fromSlot).onSlotChanged(); //Shows that the change happened
+								return current;
+							}
+							
+						} else if(2 == current.getItemDamage()) {
+							int i = 3;
+							if(inventorySlots.get(i).getHasStack()) {
+								if(inventorySlots.get(i).getStack().getCount() + current.getCount() > inventorySlots.get(i).getSlotStackLimit()) {
+									int c = current.getCount() - (inventorySlots.get(i).getSlotStackLimit() - inventorySlots.get(i).getStack().getCount());
+									inventorySlots.get(i).getStack().setCount(inventorySlots.get(i).getSlotStackLimit());
+									inventorySlots.get(i).onSlotChanged(); //Shows that the change happened
+									inventorySlots.get(fromSlot).getStack().setCount(c);
+									inventorySlots.get(fromSlot).onSlotChanged(); //Shows that the change happened
+								} else {
+									inventorySlots.get(i).getStack().setCount(inventorySlots.get(i).getStack().getCount() + current.getCount());
+									inventorySlots.get(i).onSlotChanged(); //Shows that the change happened
+									inventorySlots.get(fromSlot).putStack(ItemStack.EMPTY);
+									inventorySlots.get(fromSlot).onSlotChanged(); //Shows that the change happened
+								
+								}
+							} else {
+								inventorySlots.get(i).putStack(current.copy());
+								inventorySlots.get(i).onSlotChanged(); //Shows that the change happened
+								inventorySlots.get(fromSlot).putStack(ItemStack.EMPTY);
+								inventorySlots.get(fromSlot).onSlotChanged(); //Shows that the change happened
+								return current;
+							}
+							
+						} else if(4 == current.getItemDamage()) {
+							int i = 2;
+							if(inventorySlots.get(i).getHasStack()) {
+								if(inventorySlots.get(i).getStack().getCount() + current.getCount() > inventorySlots.get(i).getSlotStackLimit()) {
+									int c = current.getCount() - (inventorySlots.get(i).getSlotStackLimit() - inventorySlots.get(i).getStack().getCount());
+									inventorySlots.get(i).getStack().setCount(inventorySlots.get(i).getSlotStackLimit());
+									inventorySlots.get(i).onSlotChanged(); //Shows that the change happened
+									inventorySlots.get(fromSlot).getStack().setCount(c);
+									inventorySlots.get(fromSlot).onSlotChanged(); //Shows that the change happened
+								} else {
+									inventorySlots.get(i).getStack().setCount(inventorySlots.get(i).getStack().getCount() + current.getCount());
+									inventorySlots.get(i).onSlotChanged(); //Shows that the change happened
+									inventorySlots.get(fromSlot).putStack(ItemStack.EMPTY);
+									inventorySlots.get(fromSlot).onSlotChanged(); //Shows that the change happened
+								
+								}
+							} else {
+								inventorySlots.get(i).putStack(current.copy());
+								inventorySlots.get(i).onSlotChanged(); //Shows that the change happened
+								inventorySlots.get(fromSlot).putStack(ItemStack.EMPTY);
+								inventorySlots.get(fromSlot).onSlotChanged(); //Shows that the change happened
+								return current;
+							}
+						}
+						
+						
+						
+						
 					}else if(current.getItem() == Items.CLAY_BALL) {
-
+						if(inventorySlots.get(0).getHasStack()) {
+							if(inventorySlots.get(0).getStack().getCount() + current.getCount() > inventorySlots.get(0).getSlotStackLimit()) {
+								int c = current.getCount() - (inventorySlots.get(0).getSlotStackLimit() - inventorySlots.get(0).getStack().getCount());
+								inventorySlots.get(0).getStack().setCount(inventorySlots.get(0).getSlotStackLimit());
+								inventorySlots.get(0).onSlotChanged(); //Shows that the change happened
+								inventorySlots.get(fromSlot).getStack().setCount(c);
+								inventorySlots.get(fromSlot).onSlotChanged(); //Shows that the change happened
+							} else {
+								inventorySlots.get(0).getStack().setCount(inventorySlots.get(0).getStack().getCount() + current.getCount());
+								inventorySlots.get(0).onSlotChanged(); //Shows that the change happened
+								inventorySlots.get(fromSlot).putStack(ItemStack.EMPTY);
+								inventorySlots.get(fromSlot).onSlotChanged(); //Shows that the change happened
+							
+							}
+						} else {
+							inventorySlots.get(0).putStack(current.copy());
+							inventorySlots.get(0).onSlotChanged(); //Shows that the change happened
+							inventorySlots.get(fromSlot).putStack(ItemStack.EMPTY);
+							inventorySlots.get(fromSlot).onSlotChanged(); //Shows that the change happened
+						}
 					}
 				}
 				//End Custom Behaviour
