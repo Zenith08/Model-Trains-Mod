@@ -135,18 +135,6 @@ public class TileEntity3DPrinter extends TileEntity implements ITickable, IInven
 		ItemStackHelper.loadAllItems(compound, this.inventory);
 		this.printingTrainId = compound.getInteger("PrintingTrainId");
 		this.canPrint = compound.getBoolean("CanPrint");
-		
-		/*        this.furnaceItemStacks = NonNullList.<ItemStack>withSize(this.getSizeInventory(), ItemStack.EMPTY);
-        ItemStackHelper.loadAllItems(compound, this.furnaceItemStacks);
-        this.furnaceBurnTime = compound.getInteger("BurnTime");
-        this.cookTime = compound.getInteger("CookTime");
-        this.totalCookTime = compound.getInteger("CookTimeTotal");
-        this.currentItemBurnTime = getItemBurnTime(this.furnaceItemStacks.get(1));
-
-        if (compound.hasKey("CustomName", 8))
-        {
-            this.furnaceCustomName = compound.getString("CustomName");
-        }*/
 	}
 
 	@Override
@@ -158,16 +146,6 @@ public class TileEntity3DPrinter extends TileEntity implements ITickable, IInven
 		ItemStackHelper.saveAllItems(compound, this.inventory);
 		compound.setInteger("PrintingTrainId", printingTrainId);
 		compound.setBoolean("CanPrint", canPrint);
-		
-		/*       compound.setInteger("BurnTime", (short)this.furnaceBurnTime);
-        compound.setInteger("CookTime", (short)this.cookTime);
-        compound.setInteger("CookTimeTotal", (short)this.totalCookTime);
-        ItemStackHelper.saveAllItems(compound, this.furnaceItemStacks);
-
-        if (this.hasCustomName())
-        {
-            compound.setString("CustomName", this.furnaceCustomName);
-        }*/
 		return compound;
 	}
 	

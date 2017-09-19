@@ -6,12 +6,11 @@ import me.kk47.modeltrains.Data;
 import me.kk47.modeltrains.client.model.ModelLoggingCarEmpty;
 import me.kk47.modeltrains.client.model.ModelLoggingCarLogs;
 import me.kk47.modeltrains.crafting.Printer3DRecipe;
-import me.kk47.modeltrains.industry.MTResources;
 import me.kk47.ueri.UERITechne;
 import me.kk47.ueri.util.RenderTransform;
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.util.ResourceLocation;
-//TODO Check if imports merged correctly
+
 public class ItemLoggingCar extends ItemTrainLoadable {
 
 	public ItemLoggingCar(int trainRegistryID) {

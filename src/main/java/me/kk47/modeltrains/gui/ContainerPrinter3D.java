@@ -68,7 +68,7 @@ public class ContainerPrinter3D extends Container{
 									inventorySlots.get(fromSlot).getStack().setCount(c);
 									inventorySlots.get(fromSlot).onSlotChanged(); //Shows that the change happened
 									
-								}else {
+								}else{
 									inventorySlots.get(i).getStack().setCount(inventorySlots.get(i).getStack().getCount() + current.getCount());
 									inventorySlots.get(i).onSlotChanged();
 									inventorySlots.get(fromSlot).putStack(ItemStack.EMPTY);
@@ -76,7 +76,7 @@ public class ContainerPrinter3D extends Container{
 									return current;
 								}
 							}
-						}else {
+						}else{
 							inventorySlots.get(i).putStack(current.copy());
 							inventorySlots.get(i).onSlotChanged(); //Shows that the change happened
 							inventorySlots.get(fromSlot).putStack(ItemStack.EMPTY);
@@ -158,10 +158,6 @@ public class ContainerPrinter3D extends Container{
 								return current;
 							}
 						}
-						
-						
-						
-						
 					}else if(current.getItem() == Items.CLAY_BALL) {
 						if(inventorySlots.get(0).getHasStack()) {
 							if(inventorySlots.get(0).getStack().getCount() + current.getCount() > inventorySlots.get(0).getSlotStackLimit()) {
