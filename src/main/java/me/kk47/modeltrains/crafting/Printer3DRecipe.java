@@ -1,6 +1,6 @@
 package me.kk47.modeltrains.crafting;
 
-/**Defines a Recipe for the 3D Prbyteer to use with a clay requirement, and a red, green and blue dye requirement.
+/**Defines a Recipe for the 3D Printer to use with a clay requirement, and a red, green and blue dye requirement.
  * This can be the same for multiple trains with no risk of conflict*/
 public class Printer3DRecipe {
 

@@ -55,9 +55,66 @@ public class ContainerTrackbed extends Container{
 		if (slot != null && slot.getHasStack()) {
 			ItemStack current = slot.getStack();
 			previous = current.copy();
+			if (fromSlot < 16) {
+				
+				for(int i = 16; i < this.inventorySlots.size(); i++) {
+					if(inventorySlots.get(i).getHasStack()) {
+						if(inventorySlots.get(i).getStack().getItem() == current.getItem()) {
+							if(inventorySlots.get(i).getStack().getCount() + current.getCount() > inventorySlots.get(i).getSlotStackLimit()) {
+								int c = inventorySlots.get(i).getStack().getCount() + current.getCount() - inventorySlots.get(i).getSlotStackLimit();
+								inventorySlots.get(i).getStack().setCount(inventorySlots.get(i).getSlotStackLimit());
+								inventorySlots.get(i).onSlotChanged();
+								inventorySlots.get(fromSlot).getStack().setCount(c);
+								inventorySlots.get(fromSlot).onSlotChanged(); //Shows that the change happened
+								
+							}else {
+								inventorySlots.get(i).getStack().setCount(inventorySlots.get(i).getStack().getCount() + current.getCount());
+								inventorySlots.get(i).onSlotChanged();
+								inventorySlots.get(fromSlot).putStack(ItemStack.EMPTY);
+								inventorySlots.get(fromSlot).onSlotChanged(); //Shows that the change happened
+								return current;
+							}
+						}
+					}else {
+						inventorySlots.get(i).putStack(current.copy());
+						inventorySlots.get(i).onSlotChanged(); //Shows that the change happened
+						inventorySlots.get(fromSlot).putStack(ItemStack.EMPTY);
+						inventorySlots.get(fromSlot).onSlotChanged(); //Shows that the change happened
+						
+					}
+				}
+			} else {
+				for(int i = 0; i < 15; i++) {
+					if(inventorySlots.get(i).getHasStack()) {
+						if(inventorySlots.get(i).getStack().getItem() == current.getItem()) {
+							if(inventorySlots.get(i).getStack().getCount() + current.getCount() > inventorySlots.get(i).getSlotStackLimit()) {
+								int c = inventorySlots.get(i).getStack().getCount() + current.getCount() - inventorySlots.get(i).getSlotStackLimit();
+								inventorySlots.get(i).getStack().setCount(inventorySlots.get(i).getSlotStackLimit());
+								inventorySlots.get(i).onSlotChanged();
+								inventorySlots.get(fromSlot).getStack().setCount(c);
+								inventorySlots.get(fromSlot).onSlotChanged(); //Shows that the change happened
+								
+							}else {
+								inventorySlots.get(i).getStack().setCount(inventorySlots.get(i).getStack().getCount() + current.getCount());
+								inventorySlots.get(i).onSlotChanged();
+								inventorySlots.get(fromSlot).putStack(ItemStack.EMPTY);
+								inventorySlots.get(fromSlot).onSlotChanged(); //Shows that the change happened
+								return current;
+							}
+						}
+					}else {
+						inventorySlots.get(i).putStack(current.copy());
+						inventorySlots.get(i).onSlotChanged(); //Shows that the change happened
+						inventorySlots.get(fromSlot).putStack(ItemStack.EMPTY);
+						inventorySlots.get(fromSlot).onSlotChanged(); //Shows that the change happened
+					}
+				}
+			}
+		}
+			
 
 			// [...] Custom behaviour
-			if (fromSlot < 16) {
+			/*if (fromSlot < 16) {
 	            // From TE Inventory to Player Inventory
 	            if (!this.mergeItemStack(current, 9, 45, true))
 	                return ItemStack.EMPTY;
@@ -75,7 +132,7 @@ public class ContainerTrackbed extends Container{
 				return ItemStack.EMPTY;
 			slot.onTake(playerIn, current);
 			
-		}
+		}*/
 		return previous;
 	}
 	

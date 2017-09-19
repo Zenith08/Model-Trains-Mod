@@ -6,8 +6,10 @@ import me.kk47.modeltrains.crafting.Printer3DRecipe;
 import me.kk47.modeltrains.items.trains.TrainRegistry;
 import me.kk47.modeltrains.network.PacketPrintTrain;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.inventory.IInventory;
+import net.minecraft.inventory.ItemStackHelper;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
@@ -53,6 +55,7 @@ public class TileEntity3DPrinter extends TileEntity implements ITickable, IInven
 				model.updateFrame();
 			}
 //			System.out.println("Synchronized model with tick");
+			this.markDirty();
 		}else {
 			
 		}
@@ -92,7 +95,7 @@ public class TileEntity3DPrinter extends TileEntity implements ITickable, IInven
 	
 	public void tryStartPrint() {
 		Printer3DRecipe recipe = TrainRegistry.getTrain(lastPacket.trainRegistryID).getPrintingRecipe(lastPacket.trainRegistryID);
-
+		
 		if(getStackInSlot(4) == ItemStack.EMPTY && 
 				getStackInSlot(0).getCount() >= recipe.getClay() &&
 				getStackInSlot(1).getCount() >= recipe.getRed() &&
@@ -127,6 +130,12 @@ public class TileEntity3DPrinter extends TileEntity implements ITickable, IInven
 	public void readFromNBT(NBTTagCompound compound)
 	{
 		super.readFromNBT(compound);
+		this.printingTime = compound.getInteger("PrintingTime");
+		this.isPrinting = compound.getBoolean("PrintingTime");
+		ItemStackHelper.loadAllItems(compound, this.inventory);
+		this.printingTrainId = compound.getInteger("PrintingTrainId");
+		this.canPrint = compound.getBoolean("CanPrint");
+		
 		/*        this.furnaceItemStacks = NonNullList.<ItemStack>withSize(this.getSizeInventory(), ItemStack.EMPTY);
         ItemStackHelper.loadAllItems(compound, this.furnaceItemStacks);
         this.furnaceBurnTime = compound.getInteger("BurnTime");
@@ -144,6 +153,12 @@ public class TileEntity3DPrinter extends TileEntity implements ITickable, IInven
 	public NBTTagCompound writeToNBT(NBTTagCompound compound)
 	{
 		super.writeToNBT(compound);
+		compound.setInteger("PrintingTime", this.printingTime);
+		compound.setBoolean("IsPrinting", isPrinting);
+		ItemStackHelper.saveAllItems(compound, this.inventory);
+		compound.setInteger("PrintingTrainId", printingTrainId);
+		compound.setBoolean("CanPrint", canPrint);
+		
 		/*       compound.setInteger("BurnTime", (short)this.furnaceBurnTime);
         compound.setInteger("CookTime", (short)this.cookTime);
         compound.setInteger("CookTimeTotal", (short)this.totalCookTime);
@@ -153,10 +168,9 @@ public class TileEntity3DPrinter extends TileEntity implements ITickable, IInven
         {
             compound.setString("CustomName", this.furnaceCustomName);
         }*/
-
 		return compound;
 	}
-
+	
 	//Code added by IInventory
 
 	@Override
