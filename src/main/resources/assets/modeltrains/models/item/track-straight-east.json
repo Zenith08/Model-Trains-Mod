@@ -1,7 +1,7 @@
 {
     "parent":"builtin/generated",
     "textures": {
-        "layer0":"modeltrains:items/track-straight-eastbound"
+        "layer0":"modeltrains:items/track-straight-east"
     },
     "display": {
         "thirdperson": {

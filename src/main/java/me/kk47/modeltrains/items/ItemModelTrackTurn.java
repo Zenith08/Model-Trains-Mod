@@ -21,15 +21,15 @@ public class ItemModelTrackTurn extends ItemModelTrackBase {
 	private final String[] metadataNames = new String[]{"east", "north", "west", "south"};
 	
 	public ItemModelTrackTurn() {
-		super("trackCorner");
+		super("track-corner");
 		this.setHasSubtypes(true);
-		this.setMaxDamage(4);
+		this.setMaxDamage(0);
 		this.setCreativeTab(ModelTrains.creativeTab);
 	}
 
 	@Override
 	public String getUnlocalizedName(ItemStack stack){
-		return super.getUnlocalizedName() + "." + metadataNames[stack.getItemDamage()];
+		return super.getUnlocalizedName() + "-" + metadataNames[stack.getItemDamage()];
 	}
 
 	@SideOnly(Side.CLIENT)
@@ -45,7 +45,7 @@ public class ItemModelTrackTurn extends ItemModelTrackBase {
 	public void registerVarients(){
 		ResourceLocation[] varientNames = new ResourceLocation[metadataNames.length];
 		for(int i = 0; i < varientNames.length; i++){
-			varientNames[i] = new ResourceLocation(Data.MODID, getUnlocalizedName().substring(5) + metadataNames[i]);
+			varientNames[i] = new ResourceLocation(Data.MODID, getUnlocalizedName().substring(5) + "-" + metadataNames[i]);
 		}
 		ModelBakery.registerItemVariants(ModItems.trackStraight, varientNames);
 	}

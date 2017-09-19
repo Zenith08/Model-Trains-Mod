@@ -9,6 +9,7 @@ import me.kk47.modeltrains.industry.MTResource;
 import me.kk47.modeltrains.industry.MTResources;
 import net.minecraft.client.model.ModelBase;
 
+//Disabled until further notice
 public abstract class ItemTrainLoadable extends ItemTrain implements IItemTrainLoadable {
 
 	protected Map<String, ModelBase> loadableResources;
@@ -29,7 +30,7 @@ public abstract class ItemTrainLoadable extends ItemTrain implements IItemTrainL
 		return maxResourcesLoadable;
 	}
 
-	@Override
+/*	@Override
 	public ModelBase getModel(String loadedResource){
 //		System.out.println("getting loaded model");
 		if(loadedResource != null){
@@ -44,5 +45,5 @@ public abstract class ItemTrainLoadable extends ItemTrain implements IItemTrainL
 		}else{
 			return getModel();
 		}
-	}
+	}*/
 }

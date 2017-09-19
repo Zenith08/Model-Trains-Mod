@@ -21,15 +21,15 @@ public class ItemModelTrackStraight extends ItemModelTrackBase {
 	private final String[] metadataNames = new String[]{"north", "east"};
 
 	public ItemModelTrackStraight() {
-		super("trackStraight");
+		super("track-straight");
 		this.setHasSubtypes(true);
-		this.setMaxDamage(2);
+		this.setMaxDamage(0);
 		this.setCreativeTab(ModelTrains.creativeTab);
 	}
 
 	@Override
 	public String getUnlocalizedName(ItemStack stack){
-		return super.getUnlocalizedName() + "." + metadataNames[stack.getItemDamage()];
+		return super.getUnlocalizedName() + "-" + metadataNames[stack.getItemDamage()];
 	}
 
 	@SideOnly(Side.CLIENT)

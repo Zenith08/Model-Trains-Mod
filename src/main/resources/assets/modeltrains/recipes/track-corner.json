@@ -1,0 +1,17 @@
+{
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+        "RR",
+        "R "
+    ],
+    "key": {
+        "R": {
+            "item": "minecraft:rail"
+        }
+    },
+    "result": {
+        "item": "modeltrains:track-corner",
+		"data": 0,
+		"count": 12
+    }
+}

@@ -1,0 +1,24 @@
+{
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+        "LCL",
+        "L L",
+        "RRR"
+    ],
+    "key": {
+        "R": {
+            "item": "minecraft:redstone"
+        },
+        "L": {
+            "item": "minecraft:dye",
+			"data": 4
+        },
+		"C": {
+			"item": "minecraft:coal",
+			"data": 0
+		}
+    },
+    "result": {
+        "item": "modeltrains:printer-3d"
+    }
+}

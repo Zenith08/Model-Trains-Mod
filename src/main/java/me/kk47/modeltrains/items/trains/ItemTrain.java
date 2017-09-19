@@ -1,16 +1,19 @@
 package me.kk47.modeltrains.items.trains;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import me.kk47.modeltrains.ModelTrains;
 import me.kk47.modeltrains.api.IItemTrain;
-import net.minecraft.client.model.ModelBase;
-import net.minecraft.creativetab.CreativeTabs;
+import me.kk47.ueri.UERIRenderable;
 import net.minecraft.item.Item;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.item.ItemStack;
 
 public abstract class ItemTrain extends Item implements IItemTrain {
 
-	protected ModelBase model;
-	protected ResourceLocation texture;
+//	protected ModelBase model;
+//	protected ResourceLocation texture;
+	protected List<UERIRenderable> renderables;
 	protected EnumTrainType type;
 	protected final int trainRegistryID;
 	
@@ -24,6 +27,7 @@ public abstract class ItemTrain extends Item implements IItemTrain {
 		this.setCreativeTab(ModelTrains.creativeTab);
 		this.trainRegistryID = trainRegistryID;
 		TrainRegistry.registerTrain(this);
+		renderables = new ArrayList<UERIRenderable>();
 	}
 	
 	@Override
@@ -36,7 +40,16 @@ public abstract class ItemTrain extends Item implements IItemTrain {
 		return trainRegistryID;
 	}
 	
+	public void addUERI(UERIRenderable renderable) {
+		renderables.add(renderable);
+	}
+	
 	@Override
+	public List<UERIRenderable> getRenderables(ItemStack stack) {
+		return renderables;
+	}
+	
+/*	@Override
 	public ModelBase getModel(){
 		return model;
 	}
@@ -48,7 +61,7 @@ public abstract class ItemTrain extends Item implements IItemTrain {
 	@Override
 	public ResourceLocation getTexture(){
 		return texture;
-	}
+	}*/
 	
 	@Override
 	public float getSize(){
@@ -59,9 +72,9 @@ public abstract class ItemTrain extends Item implements IItemTrain {
 		this.size = size;
 	}
 
-	protected void setTexture(ResourceLocation texture){
+/*	protected void setTexture(ResourceLocation texture){
 		this.texture = texture;
-	}
+	}*/
 	
 	public Item asItem() {
 		return this;

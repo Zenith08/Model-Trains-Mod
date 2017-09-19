@@ -27,7 +27,6 @@ public class SpeedButton extends GuiButton {
 			GlStateManager.enableBlend();
 			GlStateManager.tryBlendFuncSeparate(770, 771, 1, 0);
 			GlStateManager.blendFunc(770, 771);
-			//TODO enable/disable
 			if(isSelected){
 				this.drawTexturedModalRect(this.x, this.y, 10, 174, 9, 9);
 			}else{
