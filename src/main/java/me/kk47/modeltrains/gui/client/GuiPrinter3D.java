@@ -1,9 +1,12 @@
 package me.kk47.modeltrains.gui.client;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import me.kk47.modeltrains.Data;
 import me.kk47.modeltrains.ModelTrains;
+import me.kk47.modeltrains.crafting.Printer3DMode;
 import me.kk47.modeltrains.gui.ContainerPrinter3D;
 import me.kk47.modeltrains.gui.client.button.PageChangeButton;
 import me.kk47.modeltrains.gui.client.button.PrintButton;
@@ -16,16 +19,16 @@ import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.inventory.IInventory;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ResourceLocation;
 
-//TODO Localize using I18n
 public class GuiPrinter3D extends GuiContainer{
 
 	private TileEntity3DPrinter te;
 
 	private int page = 0;
 	private int maxPages;
-	private TrainRegistryEntry[] trains;
+	private List<TrainRegistryEntry> trains;
 
 	private TrainSelectButton[] trainSelectors;
 	private byte selectedTrainButton = 0;
@@ -49,6 +52,38 @@ public class GuiPrinter3D extends GuiContainer{
 	}
 	
 	@Override
+	public void updateScreen() {
+		for(TrainSelectButton tsb : trainSelectors) {
+			if(TrainRegistry.getTrain(tsb.getTrainID()).getPrintingMode() == Printer3DMode.VARIABLE_COLOUR) {
+				tsb.setItemStackNBT(buildNBTTag(te.getStackInSlot(1).getCount(), te.getStackInSlot(3).getCount(), te.getStackInSlot(2).getCount()));
+			}
+		}
+	}
+	
+	private NBTTagCompound buildNBTTag(int r, int g, int b) {
+		if(r < 1) {
+			r = 1;
+		}else if(r > 5) {
+			r = 5;
+		}
+		if(g < 1){
+			g = 1;
+		}else if(g > 5) {
+			g = 5;
+		}
+		if(b < 1) {
+			b = 1;
+		}else if(b > 5) {
+			b = 5;
+		}
+		NBTTagCompound out = new NBTTagCompound();
+		out.setFloat("red", (r-1)*0.25F);
+		out.setFloat("green", (g-1)*0.25F);
+		out.setFloat("blue", (b-1)*0.25F);
+		return out;
+	}
+
+	@Override
 	protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {
 		//Draws basic stuff
 		//Update buttons pressed
@@ -59,7 +94,7 @@ public class GuiPrinter3D extends GuiContainer{
 				trainSelectors[i].setSelected(false);
 			}
 		}
-		
+
 		print.setPrinting(te.isPrinting());
 
 		this.mc.getTextureManager().bindTexture(new ResourceLocation(Data.MODID + ":textures/gui/printergui.png"));
@@ -83,7 +118,7 @@ public class GuiPrinter3D extends GuiContainer{
 				downPage.buttonPressed();
 			}
 		}else if(button.id == 8) {
-//			System.out.println("Button Pressed");
+			//			System.out.println("Button Pressed");
 			if(!te.isPrinting() && te.canPrint()) {
 				te.setField(1, 0);
 				te.setField(2, trainSelectors[selectedTrainButton].getTrainID());
@@ -97,31 +132,49 @@ public class GuiPrinter3D extends GuiContainer{
 		selectedTrainButton = 0;
 		for(int i = 0; i < trainSelectors.length; i++) {
 			int nextArray = (page*5) + i;
-			if(nextArray < trains.length) {
-				trainSelectors[i].setTrainID(trains[nextArray].getRegisteredID());
+			if(nextArray < trains.size()) {
+				trainSelectors[i].setTrainID(trains.get(nextArray).getRegisteredID());
+				trainSelectors[i].enabled = true;
+			}else {
+				trainSelectors[i].enabled = false;
+				trainSelectors[i].setTrainID(-1); //-1 indicates disabled
 			}
 		}
 	}
 
 	@Override
 	public boolean doesGuiPauseGame() {
-		return true;
+		return false;
 	}
 
 	@Override
 	public void initGui() {
 		super.initGui();
 		//  gui button             id, x cord, y cord, caption
-		trains = TrainRegistry.getAllTrains();
+		//Initializes the array of printable trains honouring the various modes
+		trains = new ArrayList<TrainRegistryEntry>();
+		TrainRegistryEntry[] allTrains = TrainRegistry.getAllTrains();
+		
+		for(TrainRegistryEntry tre : allTrains) {
+			if(tre.getTrain().getPrintingMode().isPrintable()) {
+				trains.add(tre);
+			}
+		}
+		
 		trainSelectors = new TrainSelectButton[5];
 		for(int i = 0; i < trainSelectors.length; i++) {
-			trainSelectors[i] = new TrainSelectButton(i, this.guiLeft+76, this.guiTop+26+20*i, trains[i].getTrain().getTrainType().toString(), trains[i].getRegisteredID(), this);
+			if(i < trains.size()) {
+				trainSelectors[i] = new TrainSelectButton(i, this.guiLeft+76, this.guiTop+26+20*i, trains.get(i).getTrain().getTrainType().toString(), trains.get(i).getRegisteredID(), this);
+			}else {
+				trainSelectors[i] = new TrainSelectButton(i, this.guiLeft+76, this.guiTop+26+20*i, "", -1, this); //Train id -1 indicates disabled
+				trainSelectors[i].enabled = false;
+			}
 			this.addButton(trainSelectors[i]);
 		}
 
 		this.addButton(upPage = new PageChangeButton(6, this.guiLeft+76, this.guiTop+6, "", true));
 		this.addButton(downPage = new PageChangeButton(7, this.guiLeft+122, this.guiTop+6, "", false));
-		maxPages = (trains.length/5) + 1;
+		maxPages = (trains.size()/5) + 1;
 
 		this.addButton(print = new PrintButton(8, this.guiLeft+29, this.guiTop+40, 37, 78, ""));
 	}

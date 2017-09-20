@@ -4,8 +4,10 @@ import javax.annotation.Nullable;
 
 import me.kk47.modeltrains.Data;
 import me.kk47.modeltrains.MTConfig;
+import me.kk47.modeltrains.api.IItemTrain;
 import me.kk47.modeltrains.blocks.ModBlocks;
 import me.kk47.modeltrains.client.model.Model3DPrinter;
+import me.kk47.modeltrains.crafting.Printer3DMode;
 import me.kk47.modeltrains.crafting.Printer3DRecipe;
 import me.kk47.modeltrains.items.trains.TrainRegistry;
 import me.kk47.modeltrains.network.PacketPrintTrain;
@@ -24,7 +26,6 @@ import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.WorldServer;
 
-//TODO Implement Colourable Stuff
 public class TileEntity3DPrinter extends TileEntity implements ITickable, IInventory{
 
 	private Model3DPrinter model = new Model3DPrinter();
@@ -35,6 +36,7 @@ public class TileEntity3DPrinter extends TileEntity implements ITickable, IInven
 	private boolean isPrinting;
 	private int printingTime; //In ticks
 	private int printingTrainId;
+	private NBTTagCompound printingTrainNBT;
 	private boolean canPrint = true;
 
 	public TileEntity3DPrinter() {
@@ -49,10 +51,9 @@ public class TileEntity3DPrinter extends TileEntity implements ITickable, IInven
 	public void update() {
 		if(isPrinting) {
 			printingTime+=1;
-//			System.out.println("Update with isPrinting = true and print time = " + printingTime);
+			//			System.out.println("Update with isPrinting = true and print time = " + printingTime);
 			if(printingTime >= 2886) {
-				setInventorySlotContents(4, new ItemStack(TrainRegistry.getTrain(printingTrainId).asItem(), 1));
-				isPrinting = false;
+				completePrint();
 				//				System.out.println("Finished Print and set item");
 			}
 			//			System.out.println("Checked Print time");
@@ -69,7 +70,7 @@ public class TileEntity3DPrinter extends TileEntity implements ITickable, IInven
 			canPrint = true;
 			model = new Model3DPrinter();
 		}
- 
+
 		//Synchronization stuff
 		lastUpdate--;
 		if(lastUpdate == 0){
@@ -79,7 +80,17 @@ public class TileEntity3DPrinter extends TileEntity implements ITickable, IInven
 		}
 	}
 
-	//The Renderer can call this per frame rither than per tick
+	private void completePrint() {
+		ItemStack printedTrain = new ItemStack(TrainRegistry.getTrain(printingTrainId).asItem(), 1);
+		if(printingTrainNBT != null) {
+			printedTrain.setTagCompound(printingTrainNBT);
+		}
+
+		setInventorySlotContents(4, printedTrain);
+		isPrinting = false;
+	}
+
+	//The Renderer can call this per frame rather than per tick
 	public void updateModelAnimation() {
 		if(isPrinting) {
 			model.updateFrame();
@@ -97,12 +108,12 @@ public class TileEntity3DPrinter extends TileEntity implements ITickable, IInven
 	//Packet Handling ----------------------------------------------------
 	PacketPrintTrain lastPacket = new PacketPrintTrain();
 	public synchronized void handlePrintPacket(PacketPrintTrain packet){
-		System.out.println("Handle Printing Packet");
+		//		System.out.println("Handle Printing Packet");
 		lastPacket = packet;
 		((WorldServer) world).addScheduledTask(new Runnable() {
 			@Override
 			public void run() {
-				System.out.println("Attempting to start print");
+				//				System.out.println("Attempting to start print");
 				tryStartPrint();
 			}
 		});
@@ -125,6 +136,11 @@ public class TileEntity3DPrinter extends TileEntity implements ITickable, IInven
 		syncData.setBoolean("IsPrinting", isPrinting);
 		syncData.setInteger("PrintingTrainId", printingTrainId);
 		syncData.setBoolean("CanPrint", canPrint);
+
+		if(printingTrainNBT != null) {
+			syncData.setTag("PrintingTrainNBT", printingTrainNBT);
+		}
+
 		return syncData;
 	}
 
@@ -137,20 +153,94 @@ public class TileEntity3DPrinter extends TileEntity implements ITickable, IInven
 		isPrinting = compound.getBoolean("IsPrinting");
 		printingTrainId = compound.getInteger("PrintingTrainId");
 		canPrint = compound.getBoolean("CanPrint");
+		if(compound.hasKey("PrintingTrainNBT")) {
+			printingTrainNBT = compound.getCompoundTag("PrintingTrainNBT");
+		}else {
+			printingTrainNBT = null;
+		}
 	}
 
 	public void tryStartPrint() {
-		Printer3DRecipe recipe = TrainRegistry.getTrain(lastPacket.trainRegistryID).getPrintingRecipe(lastPacket.trainRegistryID);
+		IItemTrain possiblePrint = TrainRegistry.getTrain(lastPacket.trainRegistryID);
+		Printer3DRecipe recipe = possiblePrint.getPrintingRecipe(lastPacket.trainRegistryID);
 
+		if(possiblePrint.getPrintingMode() == Printer3DMode.REQUIRED_RESOURCES) {
+			startRequiredPrint(recipe);
+		}else if(possiblePrint.getPrintingMode() == Printer3DMode.VARIABLE_COLOUR) {
+			startColouredPrint(recipe);
+		}
+	}
+
+	private void startColouredPrint(Printer3DRecipe recipe) {
 		if(getStackInSlot(4) == ItemStack.EMPTY && 
 				getStackInSlot(0).getCount() >= recipe.getClay() &&
-				getStackInSlot(1).getCount() >= recipe.getRed() &&
-				getStackInSlot(2).getCount() >= recipe.getGreen() &&
-				getStackInSlot(3).getCount() >= recipe.getBlue()) {
+				getStackInSlot(1).getCount() >= 1 && //Red
+				getStackInSlot(2).getCount() >= 1 && //Blue
+				getStackInSlot(3).getCount() >= 1 //Green
+				) {
+
+			//Determines colouring based on stack size
+			int red, green, blue;
+
+			//Determines Red Colouring
+			if(getStackInSlot(1).getCount() > 5) {
+			//	System.out.println("Red is > 5");
+				red = 5;
+			}else {
+				red = getStackInSlot(1).getCount();
+			}
+			
+			//Determines Blue Colouring
+			if(getStackInSlot(2).getCount() > 5) {
+			//	System.out.println("Blue is > 5");
+				blue = 5;
+			}else {
+				blue = getStackInSlot(2).getCount();
+			}
+			
+			//Determines Green Colouring
+			if(getStackInSlot(3).getCount() > 5) {
+			//	System.out.println("Green is > 5");
+				green = 5;
+			}else {
+				green = getStackInSlot(3).getCount();
+			}
+			
+			//System.out.println("Starting print with rgb: " + red + ", " + green + ", " + blue);
 
 			isPrinting = true;
 			canPrint = false;
 			printingTrainId = lastPacket.trainRegistryID;
+			printingTrainNBT = new NBTTagCompound();
+
+			printingTrainNBT.setFloat("red", (red-1)*0.25F);
+			printingTrainNBT.setFloat("green", (green-1)*0.25F);
+			printingTrainNBT.setFloat("blue", (blue-1)*0.25F);
+
+			decrStackSize(0, recipe.getClay());
+			decrStackSize(1, red);
+			decrStackSize(2, blue);
+			decrStackSize(3, green);
+
+			printingTime = 0;
+
+			this.markDirty();
+		}
+	}
+
+	private void startRequiredPrint(Printer3DRecipe recipe) {
+		//This is the code for required resources
+		if(getStackInSlot(4) == ItemStack.EMPTY && 
+				getStackInSlot(0).getCount() >= recipe.getClay() &&
+				getStackInSlot(1).getCount() >= recipe.getRed() &&
+				getStackInSlot(2).getCount() >= recipe.getGreen() &&
+				getStackInSlot(3).getCount() >= recipe.getBlue()
+				) {
+
+			isPrinting = true;
+			canPrint = false;
+			printingTrainId = lastPacket.trainRegistryID;
+			printingTrainNBT = null;
 
 			decrStackSize(0, recipe.getClay());
 			decrStackSize(1, recipe.getRed());
@@ -158,7 +248,7 @@ public class TileEntity3DPrinter extends TileEntity implements ITickable, IInven
 			decrStackSize(3, recipe.getBlue());
 
 			printingTime = 0;
-			
+
 			this.markDirty(); //The printing can start so save that it has started
 		}
 	}
@@ -181,6 +271,10 @@ public class TileEntity3DPrinter extends TileEntity implements ITickable, IInven
 		ItemStackHelper.loadAllItems(compound, this.inventory);
 		this.printingTrainId = compound.getInteger("PrintingTrainId");
 		this.canPrint = compound.getBoolean("CanPrint");
+
+		if(compound.hasKey("PrintingTrainNBT")) {
+			this.printingTrainNBT = compound.getCompoundTag("PrintingTrainNBT");
+		}
 	}
 
 	@Override
@@ -192,6 +286,11 @@ public class TileEntity3DPrinter extends TileEntity implements ITickable, IInven
 		ItemStackHelper.saveAllItems(compound, this.inventory);
 		compound.setInteger("PrintingTrainId", printingTrainId);
 		compound.setBoolean("CanPrint", canPrint);
+
+		if(printingTrainNBT != null) {
+			compound.setTag("PrintingTrainNBT", printingTrainNBT);
+		}
+
 		return compound;
 	}
 

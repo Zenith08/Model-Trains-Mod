@@ -4,6 +4,7 @@ import org.lwjgl.util.vector.Vector3f;
 
 import me.kk47.modeltrains.Data;
 import me.kk47.modeltrains.client.model.ModelToyTrain;
+import me.kk47.modeltrains.crafting.Printer3DMode;
 import me.kk47.modeltrains.crafting.Printer3DRecipe;
 import me.kk47.ueri.UERITechne;
 import me.kk47.ueri.util.RenderTransform;
@@ -17,13 +18,13 @@ public class ItemToyTrain extends ItemTrain {
 	}
 
 	@Override
-	public boolean isUsing3DPrinter() {
-		return true;
+	public Printer3DRecipe getPrintingRecipe(int trainRegistryID) {
+		return new Printer3DRecipe(2, 0, 0, 0);
 	}
 
 	@Override
-	public Printer3DRecipe getPrintingRecipe(int trainRegistryID) {
-		return new Printer3DRecipe(2, 0, 0, 0);
+	public Printer3DMode getPrintingMode() {
+		return Printer3DMode.REQUIRED_RESOURCES;
 	}
 
 }

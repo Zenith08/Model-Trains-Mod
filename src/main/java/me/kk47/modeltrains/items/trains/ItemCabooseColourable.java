@@ -10,6 +10,7 @@ import me.kk47.modeltrains.Data;
 import me.kk47.modeltrains.ModelTrains;
 import me.kk47.modeltrains.api.IItemTrain;
 import me.kk47.modeltrains.client.model.ModelCaboose;
+import me.kk47.modeltrains.crafting.Printer3DMode;
 import me.kk47.modeltrains.crafting.Printer3DRecipe;
 import me.kk47.ueri.UERIRenderable;
 import me.kk47.ueri.UERITechne;
@@ -29,6 +30,8 @@ public class ItemCabooseColourable extends Item implements IItemColor, IItemTrai
 		this.setRegistryName(Data.MODID, "coloured-caboose");
 		this.setUnlocalizedName("coloured-caboose");
 		this.setCreativeTab(ModelTrains.creativeTab);
+		TrainRegistry.registerTrain(this);
+		this.setMaxStackSize(1);
 	}
 
 	@Override
@@ -84,13 +87,8 @@ public class ItemCabooseColourable extends Item implements IItemColor, IItemTrai
 	}
 
 	@Override
-	public boolean isUsing3DPrinter() {
-		return false;
-	}
-
-	@Override
 	public Printer3DRecipe getPrintingRecipe(int trainRegistryID) {
-		return null;
+		return new Printer3DRecipe((byte) 1);
 	}
 
 	@Override
@@ -100,11 +98,16 @@ public class ItemCabooseColourable extends Item implements IItemColor, IItemTrai
 
 	@Override
 	public int getColorFromItemstack(ItemStack stack, int tintIndex) {
-		if(tintIndex == 0) {
+		if(tintIndex == 0 && stack.getTagCompound() != null) {
 			return new Color(stack.getTagCompound().getFloat("red"), stack.getTagCompound().getFloat("green"), stack.getTagCompound().getFloat("blue")).getRGB();
 		}else {
 			return 0;
 		}
+	}
+
+	@Override
+	public Printer3DMode getPrintingMode() {
+		return Printer3DMode.VARIABLE_COLOUR;
 	}
 
 }

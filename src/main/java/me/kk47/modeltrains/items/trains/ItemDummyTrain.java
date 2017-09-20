@@ -2,6 +2,7 @@ package me.kk47.modeltrains.items.trains;
 
 import me.kk47.modeltrains.Data;
 import me.kk47.modeltrains.client.model.ModelDummyTrain;
+import me.kk47.modeltrains.crafting.Printer3DMode;
 import me.kk47.modeltrains.crafting.Printer3DRecipe;
 import me.kk47.ueri.UERITechne;
 import net.minecraft.util.ResourceLocation;
@@ -14,13 +15,13 @@ public class ItemDummyTrain extends ItemTrain {
 	}
 
 	@Override
-	public boolean isUsing3DPrinter() {
-		return false;
+	public Printer3DRecipe getPrintingRecipe(int trainRegistryID) {
+		return null;
 	}
 
 	@Override
-	public Printer3DRecipe getPrintingRecipe(int trainRegistryID) {
-		return null;
+	public Printer3DMode getPrintingMode() {
+		return Printer3DMode.DISABLED;
 	}
 
 }

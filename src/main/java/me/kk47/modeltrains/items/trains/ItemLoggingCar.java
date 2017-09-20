@@ -5,6 +5,7 @@ import org.lwjgl.util.vector.Vector3f;
 import me.kk47.modeltrains.Data;
 import me.kk47.modeltrains.client.model.ModelLoggingCarEmpty;
 import me.kk47.modeltrains.client.model.ModelLoggingCarLogs;
+import me.kk47.modeltrains.crafting.Printer3DMode;
 import me.kk47.modeltrains.crafting.Printer3DRecipe;
 import me.kk47.ueri.UERITechne;
 import me.kk47.ueri.util.RenderTransform;
@@ -21,11 +22,6 @@ public class ItemLoggingCar extends ItemTrainLoadable {
 	}
 
 	@Override
-	public boolean isUsing3DPrinter() {
-		return true;
-	}
-
-	@Override
 	public Printer3DRecipe getPrintingRecipe(int trainRegistryID) {
 		return new Printer3DRecipe(1, 2, 2, 2);
 	}
@@ -34,6 +30,11 @@ public class ItemLoggingCar extends ItemTrainLoadable {
 	@Override
 	public ModelBase getModel(String loadedResource) {
 		return null;
+	}
+
+	@Override
+	public Printer3DMode getPrintingMode() {
+		return Printer3DMode.REQUIRED_RESOURCES;
 	}
 
 }

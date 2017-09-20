@@ -10,6 +10,7 @@ import me.kk47.modeltrains.Data;
 import me.kk47.modeltrains.ModelTrains;
 import me.kk47.modeltrains.api.IItemTrain;
 import me.kk47.modeltrains.client.model.ModelPassengerCarage;
+import me.kk47.modeltrains.crafting.Printer3DMode;
 import me.kk47.modeltrains.crafting.Printer3DRecipe;
 import me.kk47.ueri.UERIRenderable;
 import me.kk47.ueri.UERITechne;
@@ -31,6 +32,9 @@ public class ItemPasengerCarColourable extends Item implements IItemColor, IItem
 		this.setRegistryName(Data.MODID, "coloured-train");
 		this.setUnlocalizedName("coloured-train");
 		this.setCreativeTab(ModelTrains.creativeTab);
+		TrainRegistry.registerTrain(this);
+		
+		this.setMaxStackSize(1);
 	}
 
 	@Override
@@ -43,7 +47,7 @@ public class ItemPasengerCarColourable extends Item implements IItemColor, IItem
 
 			items.add(generateItemStack(0, 1, 1)); //Light Blue
 			items.add(generateItemStack(1, 0, 1)); //Magenta
-			//        	items.add(generateItemStack(1, 1, 1)); //White
+			items.add(generateItemStack(1, 1, 1)); //White
 		}
 	}
 
@@ -85,15 +89,9 @@ public class ItemPasengerCarColourable extends Item implements IItemColor, IItem
 		return 0.5F;
 	}
 
-	//I'll deal with it later
-	@Override
-	public boolean isUsing3DPrinter() {
-		return false;
-	}
-
 	@Override
 	public Printer3DRecipe getPrintingRecipe(int trainRegistryID) {
-		return null;
+		return new Printer3DRecipe((byte) 1);
 	}
 
 	@Override
@@ -103,11 +101,16 @@ public class ItemPasengerCarColourable extends Item implements IItemColor, IItem
 
 	@Override
 	public int getColorFromItemstack(ItemStack stack, int tintIndex) {
-		if(tintIndex == 0) {
+		if(tintIndex == 0 && stack.getTagCompound() != null) {
 			return new Color(stack.getTagCompound().getFloat("red"), stack.getTagCompound().getFloat("green"), stack.getTagCompound().getFloat("blue")).getRGB();
 		}else {
 			return 0;
 		}
+	}
+
+	@Override
+	public Printer3DMode getPrintingMode() {
+		return Printer3DMode.VARIABLE_COLOUR;
 	}
 
 }

@@ -4,10 +4,10 @@ package me.kk47.modeltrains.crafting;
  * This can be the same for multiple trains with no risk of conflict*/
 public class Printer3DRecipe {
 
-	private final byte clay;
-	private final byte red;
-	private final byte green;
-	private final byte blue;
+	protected byte clay;
+	protected byte red;
+	protected byte green;
+	protected byte blue;
 	
 	/**Creates a new recipe requiring 1 clay, and 1 red, green, and blue dye*/
 	public Printer3DRecipe() {
@@ -71,6 +71,5 @@ public class Printer3DRecipe {
 	public byte getBlue() {
 		return blue;
 	}
-	
 	
 }
