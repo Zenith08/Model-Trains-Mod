@@ -174,7 +174,7 @@ public class GuiPrinter3D extends GuiContainer{
 
 		this.addButton(upPage = new PageChangeButton(6, this.guiLeft+76, this.guiTop+6, "", true));
 		this.addButton(downPage = new PageChangeButton(7, this.guiLeft+122, this.guiTop+6, "", false));
-		maxPages = (trains.size()/5) + 1;
+		maxPages = (trains.size()/5);
 
 		this.addButton(print = new PrintButton(8, this.guiLeft+29, this.guiTop+40, 37, 78, ""));
 	}

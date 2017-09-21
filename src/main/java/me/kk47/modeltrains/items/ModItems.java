@@ -101,5 +101,7 @@ public class ModItems {
 		ri.getItemModelMesher().register(toyTrain, 0, new ModelResourceLocation(Data.MODID + ":" + "toy-train", "inventory"));
 		ri.getItemModelMesher().register(colouredCar, 0, new ModelResourceLocation(Data.MODID + ":" + "coloured-train", "inventory"));
 		ri.getItemModelMesher().register(colouredCaboose, 0, new ModelResourceLocation(Data.MODID + ":" + "coloured-caboose", "inventory"));
+	
+		ri.getItemModelMesher().register(loggingCar, 0, new ModelResourceLocation(Data.MODID + ":" + "logging-car", "inventory"));
 	}
 }

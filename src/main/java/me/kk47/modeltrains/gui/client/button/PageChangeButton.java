@@ -9,7 +9,7 @@ import net.minecraft.util.ResourceLocation;
 public class PageChangeButton extends GuiButton {
 
 	private static final ResourceLocation TEXTURE = new ResourceLocation(Data.MODID + ":textures/gui/printergui.png");
-	private static final int PRESS_TIMER_MAX = 90;
+	private static final int PRESS_TIMER_MAX = 30;
 
 	private int pressTimer = 0;
 	private boolean isUpButton;
@@ -25,7 +25,10 @@ public class PageChangeButton extends GuiButton {
 
 	@Override
 	public void drawButton(Minecraft mc, int mouseX, int mouseY, float partialTicks){
-		pressTimer-=1;
+		pressTimer--;
+		if(pressTimer < 0) {
+			pressTimer = 0;
+		}
 		if(this.visible){
 			mc.getTextureManager().bindTexture(TEXTURE);
 			GlStateManager.enableBlend();

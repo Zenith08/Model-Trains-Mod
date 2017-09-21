@@ -82,10 +82,13 @@ public class ModBlocks {
 		Minecraft.getMinecraft().getRenderItem().getItemModelMesher()
 	    .register(itemTrainController, 0, new ModelResourceLocation(Data.MODID + ":traincontroller", "inventory"));
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityTrainController.class, new RenderTrain());
-	
+		
 		//Forrest
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityIndustryForrest.class, new RenderIndustryForrest());
 		
+		//3D Printer
+		Minecraft.getMinecraft().getRenderItem().getItemModelMesher()
+		.register(itemPrinter3d, 0, new ModelResourceLocation(Data.MODID + ":printer-3d", "inventory"));
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntity3DPrinter.class, new Render3DPrinter());
 	}
 }
