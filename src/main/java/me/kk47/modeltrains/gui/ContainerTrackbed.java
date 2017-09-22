@@ -66,7 +66,7 @@ public class ContainerTrackbed extends Container{
 						//Transfers the item from the TE to the player's inventory.
 						for(int i = 16; i < this.inventorySlots.size(); i++) {
 							if(inventorySlots.get(i).getHasStack()) {
-								if(inventorySlots.get(i).getStack().getItem() == current.getItem()) {
+								if(ItemStack.areItemStacksEqual(inventorySlots.get(i).getStack(), current)) {
 									if(inventorySlots.get(i).getStack().getCount() + current.getCount() > inventorySlots.get(i).getSlotStackLimit()) {
 										int c = inventorySlots.get(i).getStack().getCount() + current.getCount() - inventorySlots.get(i).getSlotStackLimit();
 										inventorySlots.get(i).getStack().setCount(inventorySlots.get(i).getSlotStackLimit());
