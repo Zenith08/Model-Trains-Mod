@@ -25,7 +25,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
 
-public class ItemPasengerCarColourable extends Item implements IItemColor, IItemTrain {
+public class ItemPasengerCarColourable extends Item implements IItemTrain {
 
 	public ItemPasengerCarColourable() {
 		super();
@@ -97,15 +97,6 @@ public class ItemPasengerCarColourable extends Item implements IItemColor, IItem
 	@Override
 	public Item asItem() {
 		return this;
-	}
-
-	@Override
-	public int getColorFromItemstack(ItemStack stack, int tintIndex) {
-		if(tintIndex == 0 && stack.getTagCompound() != null) {
-			return new Color(stack.getTagCompound().getFloat("red"), stack.getTagCompound().getFloat("green"), stack.getTagCompound().getFloat("blue")).getRGB();
-		}else {
-			return 0;
-		}
 	}
 
 	@Override

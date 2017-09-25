@@ -23,7 +23,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
 
-public class ItemCabooseColourable extends Item implements IItemColor, IItemTrain {
+public class ItemCabooseColourable extends Item implements IItemTrain {
 
 	public ItemCabooseColourable() {
 		super();
@@ -94,15 +94,6 @@ public class ItemCabooseColourable extends Item implements IItemColor, IItemTrai
 	@Override
 	public Item asItem() {
 		return this;
-	}
-
-	@Override
-	public int getColorFromItemstack(ItemStack stack, int tintIndex) {
-		if(tintIndex == 0 && stack.getTagCompound() != null) {
-			return new Color(stack.getTagCompound().getFloat("red"), stack.getTagCompound().getFloat("green"), stack.getTagCompound().getFloat("blue")).getRGB();
-		}else {
-			return 0;
-		}
 	}
 
 	@Override

@@ -35,18 +35,16 @@ public class ModelTrains {
     
     public static final CreativeTabsModelTrains creativeTab = new CreativeTabsModelTrains();
     
-    public static UERIJson testJson;
-
     @EventHandler
     public void preInit(FMLPreInitializationEvent e) {
     	//Initialize the turn array
 //    	TurnHelper.initTurnArray();
-    	MinecraftForge.EVENT_BUS.register(this);
+//    	MinecraftForge.EVENT_BUS.register(this);
     	proxy.preInit(e);
     	
-    	testJson = new UERIJson(null, new ResourceLocation(Data.MODID + ":textures/blocks/trackbed.png"));
+//   	testJson = new UERIJson(null, new ResourceLocation(Data.MODID + ":textures/blocks/trackbed.png"));
 //   	System.out.println("Json Callback registered");
-    	UERIMod.addJsonModelCallback(testJson, new ModelResourceLocation(Data.MODID + ":" + "/block/trackbed.json"));
+//    	UERIMod.addJsonModelCallback(testJson, new ModelResourceLocation(Data.MODID + ":" + "/block/trackbed.json"));
     }
 
     @EventHandler
@@ -63,11 +61,4 @@ public class ModelTrains {
     public void postInit(FMLPostInitializationEvent e) {
     	proxy.postInit(e);
     }
-    
-    @SubscribeEvent
-    public void onModelBake(ModelBakeEvent mbe) {
-//    	IBakedModel ibm = mbe.getModelManager().getModel(new ModelResourceLocation(Data.MODID + ":" + "/block/trackbed.json"));
-//    	testJson = new UERIJson(ibm, new ResourceLocation(Data.MODID + ":/textures/blocks/trackbed.png"));
-    }
-    
 }

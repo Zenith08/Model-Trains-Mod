@@ -13,9 +13,12 @@ import me.kk47.modeltrains.items.ModItems;
 
 public class ClientProxy extends CommonProxy{
 
+	public ColourableTrains colourableTrain;
+	
 	@Override
 	public void preInit(FMLPreInitializationEvent e) {
 		super.preInit(e);
+		colourableTrain = new ColourableTrains();
 	}
 
 	@Override
@@ -23,8 +26,7 @@ public class ClientProxy extends CommonProxy{
 		super.init(e);
 		ModBlocks.clientInit(e);
 		
-		Minecraft.getMinecraft().getItemColors().registerItemColorHandler(ModItems.colouredCar, ModItems.colouredCar);
-		Minecraft.getMinecraft().getItemColors().registerItemColorHandler(ModItems.colouredCaboose, ModItems.colouredCaboose);
+		Minecraft.getMinecraft().getItemColors().registerItemColorHandler(colourableTrain, ModItems.colouredCaboose, ModItems.colouredCar);
 	}
 
 	@Override
