@@ -35,7 +35,7 @@ public class TrainSelectButton extends GuiButton {
 		this.trainID = trainID;
 		selected = false;
 		this.gui = gui;
-		trainName = new ScrollingName(I18n.format(TrainRegistry.getTrain(trainID).getUnlocalizedName() + ".name"), 12);
+		trainName = new ScrollingName(I18n.format(TrainRegistry.getTrain(trainID).asItem().getUnlocalizedName() + ".name"), 12);
 		stack = new ItemStack(TrainRegistry.getTrain(trainID).asItem());
 	}
 
@@ -43,7 +43,7 @@ public class TrainSelectButton extends GuiButton {
 		super(buttonId, x, y, widthIn, heightIn, buttonText);
 		this.trainID = trainID;
 		selected = false;
-		trainName = new ScrollingName(I18n.format(TrainRegistry.getTrain(trainID).getUnlocalizedName() + ".name"), 12);
+		trainName = new ScrollingName(I18n.format(TrainRegistry.getTrain(trainID).asItem().getUnlocalizedName() + ".name"), 12);
 		stack = new ItemStack(TrainRegistry.getTrain(trainID).asItem());
 	}
 
@@ -103,7 +103,7 @@ public class TrainSelectButton extends GuiButton {
 	 */
 	public void setTrainID(int trainID) {
 		this.trainID = trainID;
-		trainName = new ScrollingName(I18n.format(TrainRegistry.getTrain(trainID).getUnlocalizedName() + ".name"), 12);
+		trainName = new ScrollingName(I18n.format(TrainRegistry.getTrain(trainID).asItem().getUnlocalizedName() + ".name"), 12);
 		stack = new ItemStack(TrainRegistry.getTrain(trainID).asItem());
 	}
 

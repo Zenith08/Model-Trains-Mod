@@ -21,8 +21,6 @@ public interface IItemTrain {
 	
 	float getSize();
 	
-	String getUnlocalizedName();
-	
 	Printer3DMode getPrintingMode();
 	
 	Printer3DRecipe getPrintingRecipe(int trainRegistryID);

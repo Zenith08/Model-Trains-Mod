@@ -38,11 +38,14 @@ public class GuiPrinter3D extends GuiContainer{
 
 	private PrintButton print;
 
+	private boolean initalized;
+
 	public GuiPrinter3D(IInventory playerInv, TileEntity3DPrinter te) {
 		super(new ContainerPrinter3D(playerInv, te));
 		this.te = te;
 		this.xSize = 175;
 		this.ySize = 215;
+		initalized = false;
 	}
 
 	@Override
@@ -50,16 +53,18 @@ public class GuiPrinter3D extends GuiContainer{
 		super.drawScreen(mouseX, mouseY, partialTicks);
 		this.renderHoveredToolTip(mouseX, mouseY);
 	}
-	
+
 	@Override
 	public void updateScreen() {
-		for(TrainSelectButton tsb : trainSelectors) {
-			if(TrainRegistry.getTrain(tsb.getTrainID()).getPrintingMode() == Printer3DMode.VARIABLE_COLOUR) {
-				tsb.setItemStackNBT(buildNBTTag(te.getStackInSlot(1).getCount(), te.getStackInSlot(3).getCount(), te.getStackInSlot(2).getCount()));
+		if(initalized) {
+			for(TrainSelectButton tsb : trainSelectors) {
+				if(TrainRegistry.getTrain(tsb.getTrainID()).getPrintingMode() == Printer3DMode.VARIABLE_COLOUR) {
+					tsb.setItemStackNBT(buildNBTTag(te.getStackInSlot(1).getCount(), te.getStackInSlot(3).getCount(), te.getStackInSlot(2).getCount()));
+				}
 			}
 		}
 	}
-	
+
 	private NBTTagCompound buildNBTTag(int r, int g, int b) {
 		if(r < 1) {
 			r = 1;
@@ -85,17 +90,19 @@ public class GuiPrinter3D extends GuiContainer{
 
 	@Override
 	protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {
-		//Draws basic stuff
-		//Update buttons pressed
-		for(byte i = 0; i < trainSelectors.length; i++) {
-			if(i == selectedTrainButton) {
-				trainSelectors[i].setSelected(true);
-			} else {
-				trainSelectors[i].setSelected(false);
+		if(initalized) {
+			//Draws basic stuff
+			//Update buttons pressed
+			for(byte i = 0; i < trainSelectors.length; i++) {
+				if(i == selectedTrainButton) {
+					trainSelectors[i].setSelected(true);
+				} else {
+					trainSelectors[i].setSelected(false);
+				}
 			}
-		}
 
-		print.setPrinting(te.isPrinting());
+			print.setPrinting(te.isPrinting());
+		}
 
 		this.mc.getTextureManager().bindTexture(new ResourceLocation(Data.MODID + ":textures/gui/printergui.png"));
 		this.drawTexturedModalRect(this.guiLeft, this.guiTop, 0, 0, this.xSize, this.ySize);
@@ -154,13 +161,13 @@ public class GuiPrinter3D extends GuiContainer{
 		//Initializes the array of printable trains honouring the various modes
 		trains = new ArrayList<TrainRegistryEntry>();
 		TrainRegistryEntry[] allTrains = TrainRegistry.getAllTrains();
-		
+
 		for(TrainRegistryEntry tre : allTrains) {
 			if(tre.getTrain().getPrintingMode().isPrintable()) {
 				trains.add(tre);
 			}
 		}
-		
+
 		trainSelectors = new TrainSelectButton[5];
 		for(int i = 0; i < trainSelectors.length; i++) {
 			if(i < trains.size()) {
@@ -177,6 +184,8 @@ public class GuiPrinter3D extends GuiContainer{
 		maxPages = (trains.size()/5);
 
 		this.addButton(print = new PrintButton(8, this.guiLeft+29, this.guiTop+40, 37, 78, ""));
+		
+		initalized = true;
 	}
 
 	/*	@Override
