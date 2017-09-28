@@ -12,7 +12,7 @@ public class ColourableTrains implements IItemColor{
 	}
 	
 	@Override
-	public int getColorFromItemstack(ItemStack stack, int tintIndex) {
+	public int colorMultiplier(ItemStack stack, int tintIndex) {
 		if(tintIndex == 0 && stack.getTagCompound() != null) {
 			return new Color(stack.getTagCompound().getFloat("red"), stack.getTagCompound().getFloat("green"), stack.getTagCompound().getFloat("blue")).getRGB();
 		}else {

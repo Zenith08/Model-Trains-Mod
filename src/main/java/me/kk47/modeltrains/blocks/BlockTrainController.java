@@ -42,7 +42,6 @@ public class BlockTrainController extends Block implements IBlockTrackContainer,
 		this.setResistance(3.0f);
 		this.setCreativeTab(ModelTrains.creativeTab);
 		this.fullBlock = false;
-		this.isBlockContainer = true;
 	}
 	
 	@Override
