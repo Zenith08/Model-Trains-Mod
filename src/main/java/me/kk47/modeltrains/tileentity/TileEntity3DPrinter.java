@@ -162,7 +162,7 @@ public class TileEntity3DPrinter extends TileEntity implements ITickable, IInven
 
 	public void tryStartPrint() {
 		IItemTrain possiblePrint = TrainRegistry.getTrain(lastPacket.trainRegistryID);
-		Printer3DRecipe recipe = possiblePrint.getPrintingRecipe(lastPacket.trainRegistryID);
+		Printer3DRecipe recipe = possiblePrint.getPrintingRecipe();
 
 		if(possiblePrint.getPrintingMode() == Printer3DMode.REQUIRED_RESOURCES) {
 			startRequiredPrint(recipe);

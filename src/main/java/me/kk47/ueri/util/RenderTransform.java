@@ -3,6 +3,8 @@ package me.kk47.ueri.util;
 import org.lwjgl.util.vector.Vector3f;
 
 import net.minecraft.client.renderer.GlStateManager;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class RenderTransform {
 

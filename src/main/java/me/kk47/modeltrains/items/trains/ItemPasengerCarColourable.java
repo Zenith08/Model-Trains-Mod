@@ -24,6 +24,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.fml.relauncher.Side;
 
 public class ItemPasengerCarColourable extends Item implements IItemTrain {
 
@@ -33,7 +34,6 @@ public class ItemPasengerCarColourable extends Item implements IItemTrain {
 		this.setUnlocalizedName("coloured-train");
 		this.setCreativeTab(ModelTrains.creativeTab);
 		TrainRegistry.registerTrain(this);
-		
 		this.setMaxStackSize(1);
 	}
 
@@ -90,7 +90,7 @@ public class ItemPasengerCarColourable extends Item implements IItemTrain {
 	}
 
 	@Override
-	public Printer3DRecipe getPrintingRecipe(int trainRegistryID) {
+	public Printer3DRecipe getPrintingRecipe() {
 		return new Printer3DRecipe((byte) 1);
 	}
 

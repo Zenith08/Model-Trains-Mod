@@ -6,6 +6,7 @@ import org.lwjgl.util.vector.Vector4f;
 
 import me.kk47.ueri.util.RenderTransform;
 import net.minecraft.client.renderer.GlStateManager;
+import net.minecraftforge.fml.relauncher.Side;
 
 public abstract class UERIRenderable {
 

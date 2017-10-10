@@ -26,6 +26,7 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 @Mod(modid = UERIModData.MODID, name = UERIModData.NAME, version = UERIModData.VERSION)
 //At least for now UERI will ship with the Model Trains Mod
+//FIXME UERI Isn't guaranteed to work with servers!
 public class UERIMod {
 	
 	@SidedProxy(clientSide="me.kk47.ueri.ClientProxy", serverSide="me.kk47.ueri.proxy.ServerProxy")

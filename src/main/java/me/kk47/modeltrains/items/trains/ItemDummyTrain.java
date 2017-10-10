@@ -4,6 +4,7 @@ import me.kk47.modeltrains.Data;
 import me.kk47.modeltrains.client.model.ModelDummyTrain;
 import me.kk47.modeltrains.crafting.Printer3DMode;
 import me.kk47.modeltrains.crafting.Printer3DRecipe;
+import me.kk47.ueri.UERIMod;
 import me.kk47.ueri.UERITechne;
 import net.minecraft.util.ResourceLocation;
 
@@ -11,11 +12,13 @@ public class ItemDummyTrain extends ItemTrain {
 
 	public ItemDummyTrain() {
 		super(EnumTrainType.CARRAGE_FREIGHT, "dummyTrain", 0);
-		this.addUERI(new UERITechne(new ModelDummyTrain(), new ResourceLocation(Data.MODID + ":/textures/trains/DummyTrain.png")));
+		if(UERIMod.isClientSided) {
+			this.addUERI(new UERITechne(new ModelDummyTrain(), new ResourceLocation(Data.MODID + ":/textures/trains/DummyTrain.png")));
+		}
 	}
 
 	@Override
-	public Printer3DRecipe getPrintingRecipe(int trainRegistryID) {
+	public Printer3DRecipe getPrintingRecipe() {
 		return null;
 	}
 

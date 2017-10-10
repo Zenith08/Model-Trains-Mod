@@ -22,7 +22,7 @@ import net.minecraftforge.fml.common.network.NetworkRegistry;
 import net.minecraftforge.fml.common.network.simpleimpl.SimpleNetworkWrapper;
 import net.minecraftforge.fml.relauncher.Side;
 
-@Mod(modid = Data.MODID, name = Data.MODNAME, version = Data.VERSION)
+@Mod(modid = Data.MODID, name = Data.MODNAME, version = Data.VERSION, useMetadata = true, acceptedMinecraftVersions = "1.12.2")
 public class ModelTrains {
 
 	@SidedProxy(clientSide=Data.CLIENT_PROXY, serverSide=Data.SERVER_PROXY)

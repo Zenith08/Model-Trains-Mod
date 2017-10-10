@@ -87,7 +87,7 @@ public class ItemCabooseColourable extends Item implements IItemTrain {
 	}
 
 	@Override
-	public Printer3DRecipe getPrintingRecipe(int trainRegistryID) {
+	public Printer3DRecipe getPrintingRecipe() {
 		return new Printer3DRecipe((byte) 1);
 	}
 
