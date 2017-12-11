@@ -69,16 +69,14 @@ public class MathHelper {
 				if(add != null){
 //					System.out.println("Changing Item Meta from " + add.getItemDamage() + " to " + (add.getItemDamage()+1));
 					add.setItemDamage(add.getItemDamage()+1);
-					nextAdd = new ItemStack(add.getItem(), 1, add.getItemDamage()+1);
+					nextAdd = new ItemStack(add.getItem(), 1, add.getItemDamage());
 					if(nextAdd.getItemDamage() > nextAdd.getMaxDamage()) {
 						nextAdd = new ItemStack(add.getItem(), 1, 0);
 					}
 				}
-				
 				ret[c][M-1-r] = nextAdd;
 			}
 		}
 		return ret;
 	}
-
 }

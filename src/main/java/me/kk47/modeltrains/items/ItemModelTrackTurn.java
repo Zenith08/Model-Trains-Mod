@@ -30,6 +30,11 @@ public class ItemModelTrackTurn extends ItemModelTrackBase {
 			this.addRenderable(new UERITechne(MODEL, TEXTURE));
 		}
 	}
+	
+	@Override
+	public int getMaxDamage() {
+		return 4;
+	}
 
 	@Override
 	public String getUnlocalizedName(ItemStack stack){

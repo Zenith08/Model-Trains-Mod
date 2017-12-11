@@ -30,6 +30,10 @@ public class ItemModelTrackStraight extends ItemModelTrackBase {
 			this.addRenderable(new UERITechne(MODEL, TEXTURE));
 		}
 	}
+	
+	public int getMaxDamage() {
+		return 1;
+	}
 
 	@Override
 	public String getUnlocalizedName(ItemStack stack){

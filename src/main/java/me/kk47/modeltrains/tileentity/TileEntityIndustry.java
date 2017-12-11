@@ -22,48 +22,62 @@ public abstract class TileEntityIndustry extends TileEntity implements ITileEnti
 	public static ItemStack TRACK_TURN_SOUTH = new ItemStack(ModItems.trackCorner, 1, 1);
 	public static ItemStack TRACK_TURN_EAST = new ItemStack(ModItems.trackCorner, 1, 2);
 	public static ItemStack TRACK_TURN_WEST = new ItemStack(ModItems.trackCorner, 1, 3);
-	
+
 	protected Industry industry;
-	
+
 	protected int masterTimeUntilProduction;
 	protected int timeUntilProduction;
-	
+
 	protected ItemStack[][] north_inventory;
 	protected ItemStack[][] east_inventory;
 	protected ItemStack[][] south_inventory;
 	protected ItemStack[][] west_inventory;
-	
+
 	protected EnumFacing facing = EnumFacing.NORTH;
-	
+
 	protected boolean firstTick = true;
-	
+
 	protected void setIndustry(Industry i){
 		this.industry = i;
 	}
-	
+
 	protected void setTimeUntilProduction(int newTime){
 		this.timeUntilProduction=newTime;
 		this.masterTimeUntilProduction=newTime;
 	}
-	
+
 	/**Sets the industries track layouts for all directions
 	 * You have to provide the south facing direction*/
 	protected void setTrackInventory(ItemStack[][] trackSouthIn){
 		this.south_inventory = trackSouthIn;
-		this.west_inventory = MathHelper.rotateTrackInv(south_inventory);
-		this.north_inventory = MathHelper.rotateTrackInv(west_inventory);
-		this.east_inventory = MathHelper.rotateTrackInv(north_inventory);
-		
+		this.west_inventory = MathHelper.rotateTrackInv(duplicateArray(south_inventory));
+		this.north_inventory = MathHelper.rotateTrackInv(duplicateArray(west_inventory));
+		this.east_inventory = MathHelper.rotateTrackInv(duplicateArray(north_inventory));
+
 		/*this.north_inventory = trackNorthInv;
 		east_inventory = MathHelper.rotateTrackInv(north_inventory);
 		south_inventory = (ItemStack[][]) MathHelper.rotateTrackInv(east_inventory);
 		west_inventory = (ItemStack[][]) MathHelper.rotateTrackInv(south_inventory);*/
 	}
-	
+
 	public EnumFacing facing(){
 		return facing;
 	}
-	
+
+	private ItemStack[][] duplicateArray(ItemStack[][] inArr) {
+		ItemStack[][] output = new ItemStack[4][4];
+		for(int x = 0; x < 4; x++) {
+			for(int y = 0; y < 4; y++) {
+				if(inArr[x][y] != null && inArr[x][y] != ItemStack.EMPTY) {
+					output[x][y] = new ItemStack(inArr[x][y].getItem(), inArr[x][y].getCount(), inArr[x][y].getItemDamage());
+				}else {
+					output[x][y] = ItemStack.EMPTY;
+				}
+			}
+		}
+		return output;
+	}
+
 	@Override
 	public ItemStack[][] getInventory(){
 		switch(facing){
@@ -71,22 +85,22 @@ public abstract class TileEntityIndustry extends TileEntity implements ITileEnti
 		case SOUTH: return south_inventory;
 		case EAST: return east_inventory;
 		case WEST: return west_inventory;
-		default: return north_inventory;
+		default: return south_inventory;
 		}
 	}
-	
+
 	@Override
 	public void update(){
 		if(firstTick)
 			firstTick();
-		
+
 		timeUntilProduction--;
 		if(timeUntilProduction == 0){
 			produce();
 			timeUntilProduction = masterTimeUntilProduction;
 		}
 	}
-	
+
 	private void firstTick() {
 		firstTick = false;
 		facing = world.getBlockState(pos).getValue(BlockTrainController.FACING);

@@ -18,5 +18,4 @@ public class ItemModelTrackCross extends ItemModelTrackBase{
 			this.addRenderable(new UERITechne(MODEL, TEXTURE));
 		}
 	}
-
 }

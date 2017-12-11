@@ -35,13 +35,12 @@ public class RenderTrackbed extends TileEntitySpecialRenderer<TileEntityTrackBed
 		ItemStack[][] inv2d = te.getInventory();
 		for(int lx = 0; lx < 4; lx++){
 			for(int ly = 0; ly < 4; ly++){
-				if(inv2d[lx][ly] != null){
+				if(inv2d[lx][ly] != null && inv2d[lx][ly] != ItemStack.EMPTY){
 					ItemStack i = inv2d[lx][ly];
 					//						System.out.println("Slot " + lx + ", " + ly + " is unlocalized name " + inv2d[lx][ly].getUnlocalizedName());
 
 					if(i.getItem() instanceof IItemModelTrack){
 						IItemModelTrack track = (IItemModelTrack) i.getItem();
-						//this.renderModel(te, x, y, z, track.getRenderModel(), track.getTexture(), 0.25F, 1.0F*lx, 0.0F, 1.0F*ly, (90.0F*i.getItemDamage()));
 						List<UERIRenderable> trainModels = track.getRenderables(i);
 						for(UERIRenderable renderable : trainModels) {
 							renderUERI(te, x, y, z, renderable, 0.25F, 1.0F*lx, 0.0F, 1.0F*ly, 90.0F*i.getItemDamage());

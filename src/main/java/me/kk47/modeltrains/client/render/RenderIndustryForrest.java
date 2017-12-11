@@ -1,11 +1,14 @@
 package me.kk47.modeltrains.client.render;
 
+import java.util.List;
+
 import org.lwjgl.opengl.GL11;
 
 import me.kk47.modeltrains.Data;
 import me.kk47.modeltrains.api.IItemModelTrack;
 import me.kk47.modeltrains.client.model.ModelForrest;
 import me.kk47.modeltrains.tileentity.TileEntityIndustryForrest;
+import me.kk47.ueri.UERIRenderable;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.renderer.GlStateManager;
@@ -25,7 +28,6 @@ public class RenderIndustryForrest extends TileEntitySpecialRenderer<TileEntityI
 			renderModel(te, x, y, z, forrest, forrestTexture, 0.25F, getXOffset(te.facing().getHorizontalIndex()), 0.0F, getZOffset(te.facing().getHorizontalIndex()), te.facing().getHorizontalIndex()*90.0F);
 			
 			//                  te     x  y  z   model       texture         scale  xMod  yMod  zMod  rotation
-			boolean hasTrack = false;
 			ItemStack[][] inv2d = te.getInventory();
 			for(int lx = 0; lx < 4; lx++){
 				for(int ly = 0; ly < 4; ly++){
@@ -35,18 +37,33 @@ public class RenderIndustryForrest extends TileEntitySpecialRenderer<TileEntityI
 					
 						if(i.getItem() instanceof IItemModelTrack){
 							IItemModelTrack track = (IItemModelTrack) i.getItem();
-							this.renderModel(te, x, y, z, track.getRenderModel(), track.getTexture(), 0.25F, 1.0F*lx, 0.0F, 1.0F*ly, (90.0F*i.getItemDamage()));
-							hasTrack = true;
-						}else{
-							
+							List<UERIRenderable> trainModels = track.getRenderables(i);
+							for(UERIRenderable renderable : trainModels) {
+								renderUERI(te, x, y, z, renderable, 0.25F, 1.0F*lx, 0.0F, 1.0F*ly, 90.0F*i.getItemDamage());
+							}
 						}
-						
 					}else{
 //						System.out.println("Slot " + lx + ", " + ly + " is null");
 					}
 				}
 			}
-		
+	}
+	
+	public void renderUERI(TileEntity te, double x, double y, double z, UERIRenderable renderable, float scale, float modifierX, float modifierY, float modifierZ, float rotation) {
+		//		System.out.println("RenderUERI method called");
+		//The PushMatrix tells the renderer to "start" doing something.
+		GlStateManager.pushMatrix();
+		//This is setting the initial location.
+		GlStateManager.translate((float) x + 0.125F, (float) y+0.4F, (float) z + 0.125F);
+		//Applies Scaling
+		GlStateManager.scale(scale, scale, scale);
+		//Applies new translation
+		GlStateManager.translate(modifierX, modifierY-0.1F, modifierZ);
+		GlStateManager.rotate(rotation, 0.0F, 1.0F, 0.0F);
+	
+		renderable.render();
+
+		GlStateManager.popMatrix();
 	}
 	
 	private int getXOffset(int facing){
