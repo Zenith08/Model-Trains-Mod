@@ -19,7 +19,7 @@ public class BlockIndustryForrest extends BlockIndustry implements IBlockIndustr
 		this.setRegistryName("forrest");
 		this.translucent=true;
 		this.fullBlock=false;
-//		this.setCreativeTab(ModelTrains.creativeTab); Will be re-enabled along with industry implementation
+		//this.setCreativeTab(ModelTrains.creativeTab); //Will be re-enabled along with industry implementation
 	}
 
 	@Override

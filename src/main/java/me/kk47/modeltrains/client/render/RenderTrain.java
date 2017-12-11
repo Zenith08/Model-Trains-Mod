@@ -88,26 +88,18 @@ public class RenderTrain extends TileEntitySpecialRenderer<TileEntityTrainContro
 		//The PushMatrix tells the renderer to "start" doing something.
 		GlStateManager.pushMatrix();
 		//This is setting the initial location.
-		//		GL11.glTranslatef((float) x + 0.5F, (float) y + 1.5F, (float) z + 0.5F);
-//		GL11.glTranslatef((float) x + 0.1F - TileEntityTrainController.BLOCK_OFFSET, (float) y+0.4F, (float) z + 0.125F - TileEntityTrainController.BLOCK_OFFSET);
 		GlStateManager.translate((float) x + 0.1F - TileEntityTrainController.BLOCK_OFFSET, (float) y+0.4F, (float) z + 0.125F - TileEntityTrainController.BLOCK_OFFSET);
 		//Applies Scaling
-//		GL11.glScalef(scale, scale, scale);
 		GlStateManager.scale(scale, scale, scale);
 		//Applies new translation
 		GlStateManager.translate(modifierX+3.6F, modifierY, modifierZ-0.5F);
-//		GL11.glTranslatef(modifierX+3.6F, modifierY, modifierZ-0.5F);
-		//		GL11.glTranslatef(modifierX+4F, modifierY, modifierZ-0.5F);
 
-//		GL11.glRotated(rotation, 0.0, 1.0, 0.0);
 		GlStateManager.rotate(rotation, 0.0F, 1.0F, 0.0F);
 		//This disables lighting on the model so that it doesn't factor being in a block when rendered
-		//		GL11.glDisable(GL11.GL_LIGHTING);
 		GlStateManager.disableLighting();
 
 		renderable.render();
 
-//		GL11.glPopMatrix();
 		GlStateManager.popMatrix();
 	}
 }

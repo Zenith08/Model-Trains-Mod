@@ -5,7 +5,6 @@ import java.util.Map;
 
 import me.kk47.modeltrains.api.IItemTrain;
 
-//TODO Make a Minecraft Forge Registry System
 /**Every ItemTrain must be registered here or it will cause issues*/
 public final class TrainRegistry {
 

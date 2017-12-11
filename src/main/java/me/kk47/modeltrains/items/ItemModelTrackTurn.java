@@ -3,10 +3,11 @@ package me.kk47.modeltrains.items;
 import me.kk47.modeltrains.Data;
 import me.kk47.modeltrains.ModelTrains;
 import me.kk47.modeltrains.client.model.ModelTrackTurn;
+import me.kk47.ueri.UERIMod;
+import me.kk47.ueri.UERITechne;
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.renderer.block.model.ModelBakery;
 import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
@@ -25,6 +26,9 @@ public class ItemModelTrackTurn extends ItemModelTrackBase {
 		this.setHasSubtypes(true);
 		this.setMaxDamage(0);
 		this.setCreativeTab(ModelTrains.creativeTab);
+		if(UERIMod.isClientSided) {
+			this.addRenderable(new UERITechne(MODEL, TEXTURE));
+		}
 	}
 
 	@Override
@@ -48,15 +52,5 @@ public class ItemModelTrackTurn extends ItemModelTrackBase {
 			varientNames[i] = new ResourceLocation(Data.MODID, getUnlocalizedName().substring(5) + "-" + metadataNames[i]);
 		}
 		ModelBakery.registerItemVariants(ModItems.trackStraight, varientNames);
-	}
-
-	@Override
-	public ModelBase getRenderModel() {
-		return MODEL;
-	}
-
-	@Override
-	public ResourceLocation getTexture() {
-		return TEXTURE;
 	}
 }
