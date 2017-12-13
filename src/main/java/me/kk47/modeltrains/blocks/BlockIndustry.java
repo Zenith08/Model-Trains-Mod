@@ -53,9 +53,9 @@ public abstract class BlockIndustry extends BlockContainer implements IBlockIndu
     	if(placer != null){
 //			System.out.println("placer not null");
 			if(placer.getHorizontalFacing() == EnumFacing.NORTH){
-				direction = EnumFacing.NORTH;
-			}else if(placer.getHorizontalFacing() == EnumFacing.SOUTH){
 				direction = EnumFacing.SOUTH;
+			}else if(placer.getHorizontalFacing() == EnumFacing.SOUTH){
+				direction = EnumFacing.NORTH;
 			}if(placer.getHorizontalFacing() == EnumFacing.EAST){
 				direction = EnumFacing.EAST;
 			}if(placer.getHorizontalFacing() == EnumFacing.WEST){

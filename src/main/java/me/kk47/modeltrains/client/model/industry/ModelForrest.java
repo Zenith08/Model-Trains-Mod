@@ -1,4 +1,4 @@
-package me.kk47.modeltrains.client.model;
+package me.kk47.modeltrains.client.model.industry;
 
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.model.ModelRenderer;

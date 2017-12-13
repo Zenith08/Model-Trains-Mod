@@ -10,7 +10,7 @@ import me.kk47.modeltrains.api.IItemTrain;
 import me.kk47.modeltrains.api.IItemTrainLoadable;
 import me.kk47.modeltrains.client.model.MTmModelBase;
 import me.kk47.modeltrains.client.model.ModelDummyTrain;
-import me.kk47.modeltrains.client.model.ModelForrest;
+import me.kk47.modeltrains.client.model.industry.ModelForrest;
 import me.kk47.modeltrains.tileentity.TileEntityTrainController;
 import me.kk47.modeltrains.train.RollingStock;
 import me.kk47.ueri.UERIRenderable;
