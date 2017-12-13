@@ -11,6 +11,7 @@ import me.kk47.modeltrains.math.Position3F;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ITickable;
 
+//TODO This should save to NBT
 public class RollingStock implements ITickable {
 
 	protected Position3F pos;
@@ -18,11 +19,11 @@ public class RollingStock implements ITickable {
 	protected ITileEntityTrainContainer te;
 	protected int blockX = 0, blockY = 0;
 	protected int lastBlockX = 0, lastBlockY = 0;
-	
+
 	protected IItemTrain item;
 
 	protected boolean hasFactoredTurn = false;
-	
+
 	protected MTResource loadedResource;
 	protected int loadedAmount;
 
@@ -31,13 +32,13 @@ public class RollingStock implements ITickable {
 		speed = 0F;
 		te = tetc;
 		loadedResource = MTResources.air;
-		loadedAmount =0;
+		loadedAmount = 0;
 	}
-	
+
 	public IItemTrain getTrainItem(){
 		return item;
 	}
-	
+
 	public void setTrainItem(IItemTrain it){
 		this.item = it;
 	}
@@ -85,8 +86,8 @@ public class RollingStock implements ITickable {
 				}else if(pos.getYaw() == 270){
 					pos.setX(pos.getX()+speed);
 				}
-			//End straight track logic ---------------------------------------------------------------------
-			//Start turning logic --------------------------------------------------------------------------
+				//End straight track logic ---------------------------------------------------------------------
+				//Start turning logic --------------------------------------------------------------------------
 			}else if(is.getItem().getUnlocalizedName().contains("corner")){
 				if(pos.getYaw() == 0){
 					pos.setY(pos.getY()-speed);
@@ -164,35 +165,82 @@ public class RollingStock implements ITickable {
 					hasFactoredTurn = false;
 				}
 			}
-			
+
 			//Start the industry logic ---------------------------------------------------------------------
-//			System.out.println("Entering Industry logic");
-			
+			//			System.out.println("Entering Industry logic");
+
 			if(speed == 0 && this.item instanceof IItemTrainLoadable){
-//				System.out.println("Loaded Resource is " + this.getLoadedResource().getName() + " amount is " + this.getLoadedAmount());
-//				System.out.println("Speed is 0 and train is loadable");
+				//				System.out.println("Loaded Resource is " + this.getLoadedResource().getName() + " amount is " + this.getLoadedAmount());
+				//				System.out.println("Speed is 0 and train is loadable");
 				if(te.getTrackBedAt(pos) instanceof ITileEntityIndustry){
-//					System.out.println("The block we are on is an industry");
+					//					System.out.println("The block we are on is an industry");
 					ITileEntityIndustry industry = (ITileEntityIndustry) te.getTrackBedAt(pos);
-					industry.tryToLoad(this);
+					industry.handleRollingStock(this);
 				}
 			}
 		}else{
 			speed = 0;
 		}
 	}
-	
+
 	public MTResource getLoadedResource(){
 		return loadedResource;
 	}
-	
+
 	public int getLoadedAmount(){
 		return loadedAmount;
 	}
+
+	/**Tries to load a resource into the train.
+	 * @param resource - An instance of the resource that will be loaded.
+	 * @param amount - The maximum amount of resource that can be loaded.
+	 * @return The amount of resource actually loaded into the train. 0 If not loaded.*/
+	public int load(MTResource resource, int amount) {
+		if(item instanceof IItemTrainLoadable) {
+			IItemTrainLoadable loadable = (IItemTrainLoadable) item;
+			if(loadable.canLoadResource(resource.getName())) {
+				if(loadedResource.getName().equalsIgnoreCase("air") || loadedResource.getName().equalsIgnoreCase(resource.getName())) {
+					int actualLoaded = 0;
+					if(loadedAmount + amount > loadable.getMaxResourcesLoadable()) {
+						actualLoaded = loadable.getMaxResourcesLoadable() - loadedAmount;
+					} else {
+						actualLoaded = amount;
+					}
+					loadedResource = resource;
+					loadedAmount += actualLoaded;
+					return actualLoaded;
+				}
+			}
+		}
+		return 0;
+	}
 	
-	public void load(MTResource resource, int amount){
-		this.loadedResource = resource;
-		this.loadedAmount += amount;
+	/**Tries to unload the specified resource.
+	 * @param resource - The resource to try and unload.
+	 * @param maxUnloadable - The most amount of resource that can be unloaded.
+	 * @return The actual amount of resource unloaded. 0 If not unloaded.*/
+	public int unload(MTResource resource, int maxUnloadable) {
+		if(item instanceof IItemTrainLoadable) {
+			IItemTrainLoadable loadable = (IItemTrainLoadable) item;
+			if(loadable.canLoadResource(resource.getName())) {
+				if(loadedResource.getName().equalsIgnoreCase(resource.getName())) {
+					int actualUnloaded = 0;
+					if(loadedAmount < maxUnloadable) {
+						actualUnloaded = loadedAmount;
+					} else {
+						actualUnloaded = maxUnloadable;
+					}
+					loadedAmount -= actualUnloaded;
+					
+					if(loadedAmount == 0) {
+						loadedResource = MTResources.air;
+					}
+					
+					return actualUnloaded;
+				}
+			}
+		}
+		return 0;
 	}
 
 	private void getBlockXY(){

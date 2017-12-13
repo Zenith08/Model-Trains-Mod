@@ -1,12 +1,12 @@
 package me.kk47.modeltrains.tileentity;
 
+import me.kk47.modeltrains.api.IItemTrainLoadable;
 import me.kk47.modeltrains.api.ITileEntityIndustry;
 import me.kk47.modeltrains.api.ITileEntityTrackContainer;
 import me.kk47.modeltrains.blocks.BlockTrainController;
-import me.kk47.modeltrains.industry.Industry;
+import me.kk47.modeltrains.industry.MTResource;
 import me.kk47.modeltrains.industry.MTResources;
 import me.kk47.modeltrains.items.ModItems;
-import me.kk47.modeltrains.items.trains.ItemTrainLoadable;
 import me.kk47.modeltrains.math.MathHelper;
 import me.kk47.modeltrains.train.RollingStock;
 import net.minecraft.item.ItemStack;
@@ -23,8 +23,6 @@ public abstract class TileEntityIndustry extends TileEntity implements ITileEnti
 	public static ItemStack TRACK_TURN_EAST = new ItemStack(ModItems.trackCorner, 1, 2);
 	public static ItemStack TRACK_TURN_WEST = new ItemStack(ModItems.trackCorner, 1, 3);
 
-	protected Industry industry;
-
 	protected int masterTimeUntilProduction;
 	protected int timeUntilProduction;
 
@@ -36,10 +34,6 @@ public abstract class TileEntityIndustry extends TileEntity implements ITileEnti
 	protected EnumFacing facing = EnumFacing.NORTH;
 
 	protected boolean firstTick = true;
-
-	protected void setIndustry(Industry i){
-		this.industry = i;
-	}
 
 	protected void setTimeUntilProduction(int newTime){
 		this.timeUntilProduction=newTime;
@@ -96,16 +90,20 @@ public abstract class TileEntityIndustry extends TileEntity implements ITileEnti
 
 		timeUntilProduction--;
 		if(timeUntilProduction == 0){
-			produce();
+			process(); //Produce stuff, convert stuff, etc.
 			timeUntilProduction = masterTimeUntilProduction;
 		}
+	}
+	
+	@Override
+	public void handleRollingStock (RollingStock rs) { //Load first so we can't unload a resource and then load it again.
+		loadResources(rs);
+		unloadResources(rs);
 	}
 
 	private void firstTick() {
 		firstTick = false;
 		facing = world.getBlockState(pos).getValue(BlockTrainController.FACING);
 	}
-
-	protected abstract void produce();
 
 }

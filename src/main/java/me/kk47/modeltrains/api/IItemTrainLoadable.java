@@ -1,6 +1,8 @@
 package me.kk47.modeltrains.api;
 
-import net.minecraft.client.model.ModelBase;
+import java.util.List;
+
+import me.kk47.ueri.UERIRenderable;
 
 public interface IItemTrainLoadable extends IItemTrain{
 
@@ -8,6 +10,6 @@ public interface IItemTrainLoadable extends IItemTrain{
 
 	int getMaxResourcesLoadable();
 
-	ModelBase getModel(String loadedResource);
+	List<UERIRenderable> getModelOverrides(String loadedResource);
 
 }

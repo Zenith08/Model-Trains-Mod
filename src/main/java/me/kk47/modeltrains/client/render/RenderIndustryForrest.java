@@ -86,7 +86,6 @@ public class RenderIndustryForrest extends TileEntitySpecialRenderer<TileEntityI
 		}
 	}
 
-	//TODO correct modifiers
 	public void renderModel(TileEntity te, double x, double y, double z, ModelBase model, ResourceLocation texture, float scale, float modifierX, float modifierY, float modifierZ, float rotation){
 		//The PushMatrix tells the renderer to "start" doing something.
 		GlStateManager.pushMatrix();

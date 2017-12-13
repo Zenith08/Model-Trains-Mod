@@ -28,7 +28,6 @@ public class RenderIndustryVillage extends TileEntitySpecialRenderer<TileEntityI
 	}
 	
 	@Override
-	//TODO the scaling is an issue.
 	public void render(TileEntityIndustryVillage te, double x, double y, double z, float partialTicks, int destroyStage, float alpha) {
 		//renderModel(te, x, y, z, village, villageTextrue, 1.0F, getXOffset(te.facing().getHorizontalIndex())+0.375F, 0.2F, getZOffset(te.facing().getHorizontalIndex())+0.375F, te.facing().getHorizontalIndex()*90.0F);
 		renderUERI(te, x, y, z, baseUERI, 1.0F, getXOffset(te.facing().getHorizontalIndex())-2.625F, 1.2F, getZOffset(te.facing().getHorizontalIndex())+0.375F, te.facing().getHorizontalIndex()*90.0F);
@@ -90,35 +89,4 @@ public class RenderIndustryVillage extends TileEntitySpecialRenderer<TileEntityI
 		default: return 0;
 		}
 	}
-
-	//TODO correct modifiers
-	@Deprecated
-	public void renderModel(TileEntity te, double x, double y, double z, ModelBase model, ResourceLocation texture, float scale, float modifierX, float modifierY, float modifierZ, float rotation){
-		//The PushMatrix tells the renderer to "start" doing something.
-		GlStateManager.pushMatrix();
-		//This is setting the initial location.
-		//		GL11.glTranslatef((float) x + 0.5F, (float) y + 1.5F, (float) z + 0.5F);
-		GlStateManager.translate((float) x + 0.125F, (float) y+0.4F, (float) z + 0.125F);
-		//Applies Scaling
-		GlStateManager.scale(scale, scale, scale);
-		//Applies new translation
-		GlStateManager.translate(modifierX, modifierY-0.1F, modifierZ);
-		GlStateManager.rotate(rotation, 0.0F, 1.0F, 0.0F);
-		//This disables lighting on the model so that it doesn't factor being in a block when rendered
-		//			GL11.glDisable(GL11.GL_LIGHTING);
-
-		//the ':' is very important
-		//binding the textures
-		Minecraft.getMinecraft().renderEngine.bindTexture(texture);
-
-		//This rotation part is very important! Without it, your model will render upside-down! And for some reason you DO need PushMatrix again!                       
-		GlStateManager.pushMatrix();
-		GlStateManager.rotate(180F, 0.0F, 0.0F, 1.0F);
-		//A reference to your Model file. Again, very important.
-		model.render((Entity)null, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0625F);
-		//Tell it to stop rendering for both the PushMatrix's
-		GlStateManager.popMatrix();
-		GlStateManager.popMatrix();
-	}
-
 }

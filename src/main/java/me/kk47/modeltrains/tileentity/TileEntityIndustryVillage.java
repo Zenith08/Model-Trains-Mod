@@ -1,10 +1,13 @@
 package me.kk47.modeltrains.tileentity;
 
+import me.kk47.modeltrains.industry.MTResources;
 import me.kk47.modeltrains.train.RollingStock;
 import net.minecraft.item.ItemStack;
 
 public class TileEntityIndustryVillage extends TileEntityIndustry {
 
+	int woodAmount = 0;
+	
 	public TileEntityIndustryVillage() {
 		super.setTimeUntilProduction(20);
 		super.setTrackInventory(new ItemStack[][]{
@@ -15,13 +18,20 @@ public class TileEntityIndustryVillage extends TileEntityIndustry {
 	}
 
 	@Override
-	public void tryToLoad(RollingStock rs) {
-		//TODO Implement with abstractions
+	public void process() {
+		if(woodAmount >= 4) {
+			//Convert it into actual wood.
+		}
 	}
 
 	@Override
-	protected void produce() {
-		// TODO abstract
+	public void loadResources(RollingStock rs) {
+		//The village doesn't load any resources right now.
+	}
+
+	@Override
+	public void unloadResources(RollingStock rs) {
+		woodAmount += rs.unload(MTResources.wood, 10);
 	}
 
 }

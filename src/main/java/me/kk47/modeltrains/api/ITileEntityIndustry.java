@@ -4,6 +4,12 @@ import me.kk47.modeltrains.train.RollingStock;
 
 public interface ITileEntityIndustry {
 
-	void tryToLoad(RollingStock rs);
+	void handleRollingStock(RollingStock rs);
+	
+	void process();
+	
+	void loadResources(RollingStock rs);
+	
+	void unloadResources(RollingStock rs);
 
 }
