@@ -1,6 +1,7 @@
 package me.kk47.modeltrains.blocks;
 
 import me.kk47.modeltrains.ModelTrains;
+import me.kk47.modeltrains.gui.MTGuiHandler;
 import me.kk47.modeltrains.tileentity.TileEntity3DPrinter;
 import me.kk47.modeltrains.tileentity.TileEntityTrackBed;
 import net.minecraft.block.BlockContainer;
@@ -35,7 +36,7 @@ public class Block3DPrinter extends BlockContainer {
 	@Override
 	public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ){
 		if (!worldIn.isRemote) {
-			playerIn.openGui(ModelTrains.instance, 2, worldIn, pos.getX(), pos.getY(), pos.getZ());
+			playerIn.openGui(ModelTrains.instance, MTGuiHandler.GUI_PRINTER_3D, worldIn, pos.getX(), pos.getY(), pos.getZ());
 		}	
 		return true;
 	}

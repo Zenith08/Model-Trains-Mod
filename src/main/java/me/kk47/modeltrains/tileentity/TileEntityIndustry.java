@@ -1,15 +1,18 @@
 package me.kk47.modeltrains.tileentity;
 
-import me.kk47.modeltrains.api.IItemTrainLoadable;
+import javax.annotation.Nullable;
+
 import me.kk47.modeltrains.api.ITileEntityIndustry;
 import me.kk47.modeltrains.api.ITileEntityTrackContainer;
 import me.kk47.modeltrains.blocks.BlockTrainController;
-import me.kk47.modeltrains.industry.MTResource;
-import me.kk47.modeltrains.industry.MTResources;
+import me.kk47.modeltrains.blocks.ModBlocks;
 import me.kk47.modeltrains.items.ModItems;
 import me.kk47.modeltrains.math.MathHelper;
 import me.kk47.modeltrains.train.RollingStock;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.network.NetworkManager;
+import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
@@ -72,6 +75,42 @@ public abstract class TileEntityIndustry extends TileEntity implements ITileEnti
 		return output;
 	}
 
+	//All industries should sync so their gui works properly.
+	//Called on Server side
+	@Nullable
+	@Override
+	public SPacketUpdateTileEntity getUpdatePacket(){
+		return new SPacketUpdateTileEntity(this.pos, 0, getUpdateTag());
+	}
+
+	//Server
+	public NBTTagCompound getUpdateTag(){
+		NBTTagCompound syncData = new NBTTagCompound();
+		this.writeToNBT(syncData);
+		return syncData;
+	}
+
+	//Client
+	public void onDataPacket(NetworkManager net, SPacketUpdateTileEntity pkt){
+		this.readFromNBT(pkt.getNbtCompound());
+	}
+	//End synchronization stuff.
+	
+	@Override
+	public void readFromNBT(NBTTagCompound compound) {
+		super.readFromNBT(compound);
+		timeUntilProduction = compound.getInteger("production-time");
+		masterTimeUntilProduction = compound.getInteger("master-time");
+	}
+
+	@Override
+	public NBTTagCompound writeToNBT(NBTTagCompound compound) {
+		super.writeToNBT(compound);
+		compound.setInteger("production-time", timeUntilProduction);
+		compound.setInteger("master-time", masterTimeUntilProduction);
+		return compound;
+	}
+
 	@Override
 	public ItemStack[][] getInventory(){
 		switch(facing){
@@ -85,16 +124,18 @@ public abstract class TileEntityIndustry extends TileEntity implements ITileEnti
 
 	@Override
 	public void update(){
+		//System.out.println("Update " + timeUntilProduction);
 		if(firstTick)
 			firstTick();
 
 		timeUntilProduction--;
-		if(timeUntilProduction == 0){
+		if(timeUntilProduction <= 0){
+			//System.out.println("Processing stuff.");
 			process(); //Produce stuff, convert stuff, etc.
 			timeUntilProduction = masterTimeUntilProduction;
 		}
 	}
-	
+
 	@Override
 	public void handleRollingStock (RollingStock rs) { //Load first so we can't unload a resource and then load it again.
 		loadResources(rs);

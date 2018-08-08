@@ -171,7 +171,6 @@ public class ContainerPrinter3D extends Container{
 								inventorySlots.get(0).onSlotChanged(); //Shows that the change happened
 								inventorySlots.get(fromSlot).putStack(ItemStack.EMPTY);
 								inventorySlots.get(fromSlot).onSlotChanged(); //Shows that the change happened
-							
 							}
 						} else {
 							inventorySlots.get(0).putStack(current.copy());
