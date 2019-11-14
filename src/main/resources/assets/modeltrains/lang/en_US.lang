@@ -12,6 +12,8 @@ item.track-straight-cross.name=Crossing Model Track
 tile.traincontroller.name=Train Controller
 tile.trackbed.name=Trackbed
 tile.printer-3d.name=3D Printer
+tile.forrest.name=Forrestry Industry
+tile.village.name=Village Industry
 
 item.toy-train.name=Toy Train Engine
 

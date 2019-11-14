@@ -1,0 +1,7 @@
+{
+    "parent":"minecraft:block/carpet",
+    "textures": {
+        "particle": "modeltrains:blocks/village",
+        "wool": "modeltrains:blocks/village"
+    }
+}

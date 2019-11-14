@@ -1,0 +1,8 @@
+{
+    "variants": {
+        "facing=north": { "model": "modeltrains:forrest" },
+        "facing=south": { "model": "modeltrains:forrest" },
+        "facing=west":  { "model": "modeltrains:forrest" },
+        "facing=east":  { "model": "modeltrains:forrest" }
+    }
+}

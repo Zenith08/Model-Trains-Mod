@@ -1,0 +1,8 @@
+{
+    "variants": {
+        "facing=north": { "model": "modeltrains:village" },
+        "facing=south": { "model": "modeltrains:village" },
+        "facing=west":  { "model": "modeltrains:village" },
+        "facing=east":  { "model": "modeltrains:village" }
+    }
+}

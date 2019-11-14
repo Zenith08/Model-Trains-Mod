@@ -18,10 +18,12 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class BlockIndustryVillage extends BlockIndustry {
 
+	private static final String name = "village";
+	
 	public BlockIndustryVillage() {
 		super(Material.WOOD);
-		this.setUnlocalizedName("village");
-		this.setRegistryName("village");
+		this.setUnlocalizedName(name);
+		this.setRegistryName(name);
 		this.translucent=true;
 		this.fullBlock=false;
 		this.setCreativeTab(ModelTrains.creativeTab);
@@ -43,6 +45,7 @@ public class BlockIndustryVillage extends BlockIndustry {
 		return false;
 	}
 
+	@Override
     public boolean isFullCube(IBlockState state)
     {
         return false;

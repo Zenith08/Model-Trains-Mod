@@ -41,7 +41,7 @@ public class GuiIndustryVillage extends GuiContainer {
 	@Override
     protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
 		//Draw how much wood we have. This is wrong btw
-		this.drawString(this.fontRenderer, "Wood: " + te.getWoodResource() , this.guiLeft-212, this.guiTop-50, 0);
+		this.drawString(this.fontRenderer, "Wood: " + te.getWoodResource() , this.guiLeft-212, this.guiTop-57, 0);
     }
 
 }

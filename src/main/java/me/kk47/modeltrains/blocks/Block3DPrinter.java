@@ -57,6 +57,7 @@ public class Block3DPrinter extends BlockContainer {
 		return false;
 	}
 
+	@Override
     public boolean isFullCube(IBlockState state)
     {
         return false;
