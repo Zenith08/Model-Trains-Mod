@@ -20,22 +20,14 @@ import net.minecraft.util.ResourceLocation;
 
 public class RenderTrain extends TileEntitySpecialRenderer<TileEntityTrainController>{
 
-	//	private ModelDummyTrain dummytrain = new ModelDummyTrain();
-	//	private ResourceLocation dummytexture = new ResourceLocation(Data.MODID + ":textures/trains/dummytrain.png");
-	//	UERIRenderable testUERI = new UERITechne(new ModelForrest(), new ResourceLocation(Data.MODID + ":textures/blocks/industry-forrest.png"));
-
 	@Override
 	public void render(TileEntityTrainController te, double x, double y, double z, float partialTicks, int destroyStage, float alpha) {
-		//		testUERI = ModelTrains.testJson;
-		//		renderUERI(te, x, y, z, testUERI, 5.0F, 5, 5, 5, 0);
 		//te     x  y  z   model       texture         scale  xMod  yMod  zMod  rotation
 		//te     x  y  z   te#getmodel te#gettexture    0.25   te#getposition
-		//			System.out.println("render train");
 		RollingStock[] trains = te.getTrains();
 		for(int i = 0; i < trains.length; i++){
 			if(trains[i].getTrainItem() != null){
 				IItemTrain it = trains[i].getTrainItem();
-				ModelBase model = null;
 
 				List<UERIRenderable> rendering = new ArrayList<UERIRenderable>();
 				
