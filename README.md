@@ -12,6 +12,7 @@ Throughout the years pretty much everything has been modded into Minecraft, but 
 ## Whats Included
 The mod includes 1 engine, some passanger carrages, cabooses, and a freight carriage. My interest has always been the code component so the modeling and texturing took a back seat. Add to that that Minecrafts model system is constantly changing and the result is not as many trains as one might hope for.
 ![Train Types](/docs/train-types.png)
+
 Furthermore, the mod includes the 3D printer which allows the user to create trains in survival mode and customize the colour of their train carriages.
 
 ![Printer UI](/docs/printer-ui.png) ![Printer Printing](/docs/printer-printing.png)
